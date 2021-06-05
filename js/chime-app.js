@@ -1,11 +1,21 @@
 // UI Elements
 let createMeetingBtn = document.getElementById('create-meeting-btn');
 let addAttendeeBtn = document.getElementById('add-attendee-btn');
+let joinMeetingBtn = document.getElementById('join-meeting-btn');
 let eventsList = document.getElementById('events');
+
+let microPhone = document.getElementById('microphone-icon');
+let speaker = document.getElementById('speaker-icon');
+let video = document.getElementById('video-icon');
 
 // Event Listeners
 createMeetingBtn.addEventListener('click', createMeeting);
 addAttendeeBtn.addEventListener('click', addAttendee);
+joinMeetingBtn.addEventListener('click', joinMeeting);
+
+microPhone.addEventListener('click', enableAudioInput);
+speaker.addEventListener('click', enableAudioOutput);
+video.addEventListener('click', enableVideoInput);
 
 var meetingId;
 var attendeeId;
@@ -13,6 +23,8 @@ var joinToken;
 var meetingResponse;
 var attendeeResponse;
 var meetingSession;
+
+var audioInputDevices, audioOutputDevices, videoInputDevices;
 
 /**
  * Create a Meeting
@@ -51,9 +63,10 @@ function addAttendee() {
     let url = "http://localhost:5000/add-attendee";
 
     let payload = {};
+    let userMeetingId =  document.getElementById('meeting-id').value.trim();
     let attendeeName = document.getElementById('attendee-name').value.trim();
 
-    payload['meeting_id'] = meetingId;
+    payload['meeting_id'] = userMeetingId;
     payload['attendee_name'] = attendeeName;
 
     console.log(payload);
@@ -102,41 +115,106 @@ function createSession() {
 }
 
 async function listAudioVideoDevices() {
-    const audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
-    const audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
-    const videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
+    audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
+    audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
+    videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
 
     // An array of MediaDeviceInfo objects
     audioInputDevices.forEach(mediaDeviceInfo => {
-        console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
     });
 
     // An array of MediaDeviceInfo objects
     audioOutputDevices.forEach(mediaDeviceInfo => {
-        console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
     });
 
     // An array of MediaDeviceInfo objects
     videoInputDevices.forEach(mediaDeviceInfo => {
-        console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
     });
+}
 
-    // Set Audio Output Device
+async function enableAudioInput() {
+    // Setup Audio Input Device
+    const audioInputDeviceInfo = audioInputDevices[0];
+    await meetingSession.audioVideo.chooseAudioInputDevice(
+        audioInputDeviceInfo.deviceId
+    );
+}
+
+async function enableAudioOutput() {
+    // Setup Audio Output Device
     const audioOutputDeviceInfo = audioOutputDevices[0];
-    await meetingSession.audioVideo.chooseAudioOutputDevice(audioOutputDeviceInfo.deviceId);
+    await meetingSession.audioVideo.chooseAudioOutputDevice(
+        audioOutputDeviceInfo.deviceId
+    );
+}
 
-    const audioElement = document.getElementById('audio-btn');
-    meetingSession.audioVideo.bindAudioElement(audioElement);
+async function enableVideoInput() {
+    // // Setup Video Output Device
+    const videoInputDeviceInfo = videoInputDevices[0];
+    await meetingSession.audioVideo.chooseVideoInputDevice(
+        videoInputDeviceInfo.deviceId
+    );
 
-    const observer = {
-        audioVideoDidStart: () => {
-            console.log('Started');
+    // Use case 13. Start sharing your video.
+    const videoElement = document.getElementById('chime-video');
+
+    const videoObserver = {
+        // videoTileDidUpdate is called whenever a new tile is created or tileState changes.
+        videoTileDidUpdate: tileState => {
+            // Ignore a tile without attendee ID and other attendee's tile.
+            if (!tileState.boundAttendeeId || !tileState.localTile) {
+                return;
+            }
+
+            meetingSession.audioVideo.bindVideoElement(tileState.tileId, videoElement);
         }
     };
 
-    meetingSession.audioVideo.addObserver(observer);
+    meetingSession.audioVideo.addObserver(videoObserver);
+    meetingSession.audioVideo.startLocalVideoTile();
+}
 
+async function joinMeeting() {
+    // Use case 4. 
+    // Add a device change observer to receive the updated device list. 
+    // For example, when you pair Bluetooth headsets with your computer, audioInputsChanged and audioOutputsChanged are 
+    // called with the device list including headsets.
+    const observer1 = {
+        audioInputsChanged: freshAudioInputDeviceList => {
+            // An array of MediaDeviceInfo objects
+            freshAudioInputDeviceList.forEach(mediaDeviceInfo => {
+                updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+            });
+        },
+        audioOutputsChanged: freshAudioOutputDeviceList => {
+            updateEvents('Audio outputs updated: ', freshAudioOutputDeviceList);
+        },
+        videoInputsChanged: freshVideoInputDeviceList => {
+            updateEvents('Video inputs updated: ', freshVideoInputDeviceList);
+        }
+    };
+
+    meetingSession.audioVideo.addDeviceChangeObserver(observer1);
+
+
+    const observer2 = {
+        audioVideoDidStart: () => {
+            updateEvents('Started');
+        }
+    };
+
+
+    const audioElement = document.getElementById('micro-phone-audio');
+    // meetingSession.audioVideo.bindAudioElement(audioElement);
+
+    meetingSession.audioVideo.bindAudioElement(audioElement);
+    meetingSession.audioVideo.addObserver(observer2);
     meetingSession.audioVideo.start();
+
+    /*
 
     // Use case 6. Add an observer to receive session lifecycle events: connecting, start, and stop.
     const observer1 = {
@@ -177,7 +255,5 @@ async function listAudioVideoDevices() {
     } else {
         console.log('Other attendees can hear your audio');
     }
-
-
-
+    */
 }

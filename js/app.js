@@ -6,38 +6,28 @@ var poolData;
 var userPool;
 var cognitoUser = '';
 
+// On Page loading, execute this
+window.addEventListener('DOMContentLoaded', saveConfigData);
+
 // Set Event handlers
 document.getElementById('signup-btn').addEventListener('click', addUser);
 document.getElementById('confirm-user-btn').addEventListener('click', confirmUser);
 document.getElementById('signin-btn').addEventListener('click', authenticateUser);
-document.getElementById('save-btn').addEventListener('click', saveConfigData);
 
 var signupMessage = document.getElementById('signup-message');
 var signinMessage = document.getElementById('signin-message');
-var configMessage = document.getElementById('config-message');
 
+/**
+ * Configure a userPool object.
+ * @param {*} e 
+ */
 function saveConfigData(e) {
     e.preventDefault();
-    configMessage.className = '';
-    configMessage.innerText = '';
-
-    // Read UI Data
-    region = document.getElementById('region').value.trim();
-    userPoolId = document.getElementById('user-pool-id').value.trim();
-    identityPoolId = document.getElementById('identity-pool-id').value.trim();
-    appId = document.getElementById('client-id').value.trim();
 
     region = 'us-east-2';
     userPoolId = 'us-east-2_NuAreech2';
     identityPoolId = 'us-east-2:a2f1e5e9-6ee4-43e5-88dd-b8848a06039e';
     appId = 'i6spf3rp58te0usidonvcbbof';
-
-    if (region === '' || userPoolId === '' || appId === '' || identityPoolId === '') {
-        configMessage.innerText = 'Provide Region, User Pool ID, Identity Pool ID, app ID values';
-        configMessage.style.display = 'block';
-        configMessage.className = 'alert alert-danger';
-        return;
-    }
 
     poolData = {
         UserPoolId: userPoolId,
