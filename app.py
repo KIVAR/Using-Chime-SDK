@@ -45,6 +45,13 @@ def flatten_json(json_doc):
     return out
 
 
+
+@app.route('/')
+@cross_origin()
+def login():
+    return render_template("index.html")
+
+
 @app.route('/create-meeting', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def create_meeting():

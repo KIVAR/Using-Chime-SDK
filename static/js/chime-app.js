@@ -108,6 +108,7 @@ async function joinMeeting() {
     meetingSession.audioVideo.bindAudioElement(audioElement);
     meetingSession.audioVideo.addObserver(observer2);
     meetingSession.audioVideo.start();
+
 }
 
 async function createSession() {
@@ -199,13 +200,15 @@ async function setupAudioVideoDevices() {
     const firstAudioOutputDevice = audioOutputDeviceInfo.deviceId;
     await meetingSession.audioVideo.chooseAudioOutputDevice(firstAudioOutputDevice);
 
-    // Setup Video Input Device
-    const videoInputDeviceInfo = videoInputDevices[0];
+    // // Setup Video Input Device
+    // const videoInputDeviceInfo = videoInputDevices[0];
 
-    if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
-        const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
-        await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
-    }
+    // if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
+    //     const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
+    //     await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
+    // }
+
+
 }
 
 async function enableAudioInput() {
@@ -226,12 +229,13 @@ async function enableAudioOutput() {
 
 async function enableVideoInput() {
     // Setup Video Input Device
-    // const videoInputDeviceInfo = videoInputDevices[0];
+    videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
+    const videoInputDeviceInfo = videoInputDevices[0];
 
-    // if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
-    //     const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
-    //     await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
-    // }
+    if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
+        const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
+        await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
+    }
 
     // Use case 13. Start sharing your video.
     const videoElement = document.getElementById('chime-video');
