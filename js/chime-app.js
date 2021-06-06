@@ -63,7 +63,7 @@ function addAttendee() {
     let url = "http://localhost:5000/add-attendee";
 
     let payload = {};
-    let userMeetingId =  document.getElementById('meeting-id').value.trim();
+    let userMeetingId = document.getElementById('meeting-id').value.trim();
     let attendeeName = document.getElementById('attendee-name').value.trim();
 
     payload['meeting_id'] = userMeetingId;
@@ -84,8 +84,6 @@ function addAttendee() {
             attendeeId = response.Attendee.AttendeeId;
             joinToken = response.Attendee.joinToken;
             updateEvents('Attendee added ' + attendeeId);
-
-            createSession();
         } else {
             updateEvents(response);
         }
@@ -112,7 +110,64 @@ function createSession() {
     );
 
     listAudioVideoDevices();
+
+    // Use case #23
+    // Subscribe to attendee presence changes
+    subscribeToAttendeePresenceChanges();
+
+    // Use case #6
+    // Observe session lifecycle events - connecting/start/stop
+    observeSessionLifeCycleChanges();
+
+    // Use case #4
+    // Add a device change observer to receive the updated device list.
+    // For example, when you pair Bluetooth headsets with your computer, audioInputsChanged and 
+    // audioOutputsChanged are called with the device list including headsets.
+    monitorChangeInDevices();
 }
+
+/**
+ * Add an observer to receive session lifecycle events: connecting, start, and stop.
+ */
+function observeSessionLifeCycleChanges() {
+    const observer = {
+        audioVideoDidStart: () => {
+            updateEvents('Meeting session started');
+        },
+        audioVideoDidStop: sessionStatus => {
+            // See the "Stopping a session" section for details.
+            updateEvents('Meetign session stopped with a session status code: ', sessionStatus.statusCode());
+        },
+        audioVideoDidStartConnecting: reconnecting => {
+            if (reconnecting) {
+                // e.g. the WiFi connection is dropped.
+                updateEvents('Attempting to reconnect');
+            }
+        }
+    };
+
+    meetingSession.audioVideo.addObserver(observer);
+}
+
+/**
+ * Subscribe to attendee presence changes. 
+ * When an attendee joins or leaves a session, the callback receives presentAttendeeId
+ * and present (a boolean).
+ */
+function subscribeToAttendeePresenceChanges() {
+    const attendeePresenceSet = new Set();
+    const callback = (presentAttendeeId, present) => {
+        updateEvents(`Attendee ID: ${presentAttendeeId} Present: ${present}`);
+        if (present) {
+            attendeePresenceSet.add(presentAttendeeId);
+        } else {
+            attendeePresenceSet.delete(presentAttendeeId);
+        }
+    };
+
+    meetingSession.audioVideo.realtimeSubscribeToAttendeeIdPresence(callback);
+}
+
 
 async function listAudioVideoDevices() {
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
@@ -152,11 +207,14 @@ async function enableAudioOutput() {
 }
 
 async function enableVideoInput() {
-    // // Setup Video Output Device
+    // Setup Video Input Device
     const videoInputDeviceInfo = videoInputDevices[0];
-    await meetingSession.audioVideo.chooseVideoInputDevice(
-        videoInputDeviceInfo.deviceId
-    );
+
+    if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
+        await meetingSession.audioVideo.chooseVideoInputDevice(
+            videoInputDeviceInfo.deviceId
+        );
+    }
 
     // Use case 13. Start sharing your video.
     const videoElement = document.getElementById('chime-video');
@@ -177,12 +235,13 @@ async function enableVideoInput() {
     meetingSession.audioVideo.startLocalVideoTile();
 }
 
-async function joinMeeting() {
-    // Use case 4. 
-    // Add a device change observer to receive the updated device list. 
-    // For example, when you pair Bluetooth headsets with your computer, audioInputsChanged and audioOutputsChanged are 
-    // called with the device list including headsets.
-    const observer1 = {
+/**
+ * Add a device change observer to receive the updated device list. 
+ * For example, when you pair Bluetooth headsets with your computer, audioInputsChanged and audioOutputsChanged are 
+ * called with the device list including headsets.
+ */
+function monitorChangeInDevices() {
+    const observer = {
         audioInputsChanged: freshAudioInputDeviceList => {
             // An array of MediaDeviceInfo objects
             freshAudioInputDeviceList.forEach(mediaDeviceInfo => {
@@ -197,15 +256,17 @@ async function joinMeeting() {
         }
     };
 
-    meetingSession.audioVideo.addDeviceChangeObserver(observer1);
+    meetingSession.audioVideo.addDeviceChangeObserver(observer);
+}
 
+async function joinMeeting() {
+    createSession();
 
     const observer2 = {
         audioVideoDidStart: () => {
-            updateEvents('Started');
+            updateEvents('Audio, Video started');
         }
     };
-
 
     const audioElement = document.getElementById('micro-phone-audio');
     // meetingSession.audioVideo.bindAudioElement(audioElement);
@@ -213,47 +274,4 @@ async function joinMeeting() {
     meetingSession.audioVideo.bindAudioElement(audioElement);
     meetingSession.audioVideo.addObserver(observer2);
     meetingSession.audioVideo.start();
-
-    /*
-
-    // Use case 6. Add an observer to receive session lifecycle events: connecting, start, and stop.
-    const observer1 = {
-        audioVideoDidStart: () => {
-            console.log('Started');
-        },
-        audioVideoDidStop: sessionStatus => {
-            // See the "Stopping a session" section for details.
-            console.log('Stopped with a session status code: ', sessionStatus.statusCode());
-        },
-        audioVideoDidStartConnecting: reconnecting => {
-            if (reconnecting) {
-                // e.g. the WiFi connection is dropped.
-                console.log('Attempting to reconnect');
-            }
-        }
-    };
-
-    meetingSession.audioVideo.addObserver(observer1);
-
-    //   Use case 7. Mute and unmute an audio input.
-    // Mute
-    meetingSession.audioVideo.realtimeMuteLocalAudio();
-
-    // Unmute
-    const unmuted = meetingSession.audioVideo.realtimeUnmuteLocalAudio();
-    if (unmuted) {
-        console.log('Other attendees can hear your audio');
-    } else {
-        // See the realtimeSetCanUnmuteLocalAudio use case below.
-        console.log('You cannot unmute yourself');
-    }
-
-    // Use case 8. To check whether the local microphone is muted, use this method rather than keeping track of your own mute state.
-    const muted = meetingSession.audioVideo.realtimeIsLocalAudioMuted();
-    if (muted) {
-        console.log('You are muted');
-    } else {
-        console.log('Other attendees can hear your audio');
-    }
-    */
 }
