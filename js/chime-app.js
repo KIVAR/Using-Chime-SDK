@@ -20,8 +20,8 @@ video.addEventListener('click', enableVideoInput);
 var meetingId;
 var attendeeId;
 var joinToken;
-var meetingResponse;
-var attendeeResponse;
+var meeting = {};
+var attendee = {};
 var meetingSession;
 
 var audioInputDevices, audioOutputDevices, videoInputDevices;
@@ -43,8 +43,8 @@ function createMeeting() {
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
-        meetingResponse = JSON.parse(this.responseText);
-        const response = JSON.parse(this.responseText);
+        response = JSON.parse(this.responseText);
+        meeting = response;
 
         if (this.status === 201) {
             meetingId = response.Meeting.MeetingId;
@@ -69,16 +69,13 @@ function addAttendee() {
     payload['meeting_id'] = userMeetingId;
     payload['attendee_name'] = attendeeName;
 
-    console.log(payload);
-
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
-        attendeeResponse = JSON.parse(this.responseText);
-        const response = JSON.parse(this.responseText);
-        console.log(response);
+        response = JSON.parse(this.responseText);
+        attendee = response;
 
         if (this.status === 201) {
             attendeeId = response.Attendee.AttendeeId;
@@ -100,7 +97,7 @@ function createSession() {
     const logger = new ChimeSDK.ConsoleLogger('MyLogger', ChimeSDK.LogLevel.INFO);
     const deviceController = new ChimeSDK.DefaultDeviceController(logger);
 
-    const configuration = new ChimeSDK.MeetingSessionConfiguration(meetingResponse, attendeeResponse);
+    const configuration = new ChimeSDK.MeetingSessionConfiguration(meeting, attendee);
 
     // In the usage examples below, you will use this meetingSession object.
     meetingSession = new ChimeSDK.DefaultMeetingSession(

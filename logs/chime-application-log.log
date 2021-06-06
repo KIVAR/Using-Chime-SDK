@@ -4809,3 +4809,846 @@ b'{"Attendee":{"AttendeeId":"19ed1baa-2115-02c7-c662-21f689eec307","ExternalUser
 2021-06-06 11:28:19,810 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
 2021-06-06 11:28:19,811 DEBUG: [retryhandler.py:187] : No retry needed.
 2021-06-06 11:28:19,813 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 11:28:19] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -
+2021-06-06 16:09:34,614 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:09:34] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:09:34,616 DEBUG: [app.py:56] : {'meeting_name': 'Test'}
+2021-06-06 16:09:34,617 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:09:34,618 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:09:34,618 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "d07246da-3afb-40dd-8bb0-6b594d614fa5", "ExternalMeetingId": "Test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:09:34,619 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:09:34,620 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:09:34,621 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:09:34,621 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T060934Z
+
+host;x-amz-date
+9be301bf2d610cf1626a1ccee699316f72cc6790e2788a4a3dd5e0de20b75e9f
+2021-06-06 16:09:34,621 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T060934Z
+20210606/us-east-1/chime/aws4_request
+e163348dd358f56768e198ab33ee696f527d228243aa57336da86d5e8b3a6a09
+2021-06-06 16:09:34,621 DEBUG: [auth.py:369] : Signature:
+033d51bdffc814b47794725e189e976ad32a9041c407ab790c1879e63f402d54
+2021-06-06 16:09:34,622 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T060934Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=033d51bdffc814b47794725e189e976ad32a9041c407ab790c1879e63f402d54', 'Content-Length': '348'}>
+2021-06-06 16:09:34,622 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:09:34,623 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:09:36,741 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:09:36,743 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'b70661f0-0ef4-41b6-94c8-aeca94764f66', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:09:36 GMT'}
+2021-06-06 16:09:36,743 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"Test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/b393b323-2765-47ce-bf38-155cafd35c25","AudioHostUrl":"7de4b33b66fdfeba289535cdf217e03f.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/b393b323-2765-47ce-bf38-155cafd35c25","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/b393b323-2765-47ce-bf38-155cafd35c25","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=b393b323-2765-47ce-bf38-155cafd35c25","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/b393b323-2765-47ce-bf38-155cafd35c25","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"b393b323-2765-47ce-bf38-155cafd35c25"}}'
+2021-06-06 16:09:36,745 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:09:36,745 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:09:36,746 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : Test                          
+2021-06-06 16:09:36,746 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,746 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 7de4b33b66fdfeba289535cdf217e03f.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:09:36,746 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,747 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,747 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,747 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,747 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:09:36,747 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : b393b323-2765-47ce-bf38-155cafd35c25
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:09:36 GMT 
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : b70661f0-0ef4-41b6-94c8-aeca94764f66
+2021-06-06 16:09:36,748 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:09:36,749 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : b70661f0-0ef4-41b6-94c8-aeca94764f66
+2021-06-06 16:09:36,749 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:09:36,750 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:09:36] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:13:26,881 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:13:26] "[37mOPTIONS /add-attendee HTTP/1.1[0m" 200 -
+2021-06-06 16:13:26,884 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateAttendee: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:13:26,885 DEBUG: [hooks.py:210] : Event before-call.chime.CreateAttendee: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:13:26,885 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateAttendee) with params: {'url_path': '/meetings/b393b323-2765-47ce-bf38-155cafd35c25/attendees', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ExternalUserId": "xx", "Tags": [{"Key": "Attendee for meeting", "Value": "xx"}]}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings/b393b323-2765-47ce-bf38-155cafd35c25/attendees', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:13:26,885 DEBUG: [hooks.py:210] : Event request-created.chime.CreateAttendee: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:13:26,885 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateAttendee: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:13:26,886 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:13:26,886 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings/b393b323-2765-47ce-bf38-155cafd35c25/attendees
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T061326Z
+
+host;x-amz-date
+e8ea1dab228c3239a842b161a6855a32644049aed2d88497af37c035475afae0
+2021-06-06 16:13:26,886 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T061326Z
+20210606/us-east-1/chime/aws4_request
+60810eb2114c4ff24e3f1ea67e15af946b0c2eb5475cbf3764fde501962ac347
+2021-06-06 16:13:26,886 DEBUG: [auth.py:369] : Signature:
+9f0163cd38aaa7215691dd85805b8c7705df4ee07263bab980f291d8bfac5b66
+2021-06-06 16:13:26,886 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings/b393b323-2765-47ce-bf38-155cafd35c25/attendees, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T061326Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=9f0163cd38aaa7215691dd85805b8c7705df4ee07263bab980f291d8bfac5b66', 'Content-Length': '82'}>
+2021-06-06 16:13:26,887 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:13:26,887 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:13:28,408 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings/b393b323-2765-47ce-bf38-155cafd35c25/attendees HTTP/1.1" 201 213
+2021-06-06 16:13:28,425 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '3d8945f7-91d4-4bea-919e-a3bbc0dc9bf5', 'Content-Type': 'application/json', 'Content-Length': '213', 'Date': 'Sun, 06 Jun 2021 06:13:28 GMT'}
+2021-06-06 16:13:28,425 DEBUG: [parsers.py:234] : Response body:
+b'{"Attendee":{"AttendeeId":"36351ae2-e2e8-657b-861f-efd39ddfc51e","ExternalUserId":"xx","JoinToken":"MzYzNTFhZTItZTJlOC02NTdiLTg2MWYtZWZkMzlkZGZjNTFlOjk3Yjk5ZjA5LTkwYzMtNDBlYi1hZjQ0LTc3MmNlNzdlZWNjNQ","Tags":null}}'
+2021-06-06 16:13:28,426 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:13:28,427 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:13:28,429 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:13:28] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -
+2021-06-06 16:14:52,937 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:14:52] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:14:52,940 DEBUG: [app.py:56] : {'meeting_name': 'xxxx'}
+2021-06-06 16:14:52,940 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:14:52,941 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:14:52,941 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "371b7167-440b-492f-986d-b322b60ce933", "ExternalMeetingId": "xxxx", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:14:52,941 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:14:52,941 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:14:52,942 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:14:52,942 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T061452Z
+
+host;x-amz-date
+69a0db679e1b4be20df24d661418336bb7eae3673da9c97a4f050020a333ed53
+2021-06-06 16:14:52,942 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T061452Z
+20210606/us-east-1/chime/aws4_request
+cd123cd59b6e2fe699649138a3d75274ccb57bdf870697223c685c7a5d709d7b
+2021-06-06 16:14:52,942 DEBUG: [auth.py:369] : Signature:
+311e77ee2b30cf19ad5e5926b2cc31f70080405ef4fac264280ce3797da29880
+2021-06-06 16:14:52,943 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T061452Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=311e77ee2b30cf19ad5e5926b2cc31f70080405ef4fac264280ce3797da29880', 'Content-Length': '348'}>
+2021-06-06 16:14:52,944 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:14:52,944 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:14:54,679 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:14:54,680 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'efec17c4-13bf-4bd8-89fc-f82bd42af06d', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:14:54 GMT'}
+2021-06-06 16:14:54,681 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"xxxx","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m3.ue1.app.chime.aws:443/calls/9398e993-c656-48b9-9757-eb6c75524287","AudioHostUrl":"2afc822c4c0157d547805580c1fd6eb0.k.m3.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/9398e993-c656-48b9-9757-eb6c75524287","ScreenSharingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/9398e993-c656-48b9-9757-eb6c75524287","ScreenViewingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=9398e993-c656-48b9-9757-eb6c75524287","SignalingUrl":"wss://signal.m3.ue1.app.chime.aws/control/9398e993-c656-48b9-9757-eb6c75524287","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"9398e993-c656-48b9-9757-eb6c75524287"}}'
+2021-06-06 16:14:54,682 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:14:54,683 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:14:54,683 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : xxxx                          
+2021-06-06 16:14:54,684 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m3.ue1.app.chime.aws:443/calls/9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,684 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 2afc822c4c0157d547805580c1fd6eb0.k.m3.ue1.app.chime.aws:3478
+2021-06-06 16:14:54,684 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,684 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,684 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,685 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m3.ue1.app.chime.aws/control/9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,685 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:14:54,685 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:14:54,685 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 9398e993-c656-48b9-9757-eb6c75524287
+2021-06-06 16:14:54,685 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:14:54 GMT 
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : efec17c4-13bf-4bd8-89fc-f82bd42af06d
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : efec17c4-13bf-4bd8-89fc-f82bd42af06d
+2021-06-06 16:14:54,686 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:14:54,688 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:14:54] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:15:44,983 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:15:44] "[37mOPTIONS /add-attendee HTTP/1.1[0m" 200 -
+2021-06-06 16:15:44,987 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateAttendee: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:15:44,988 DEBUG: [hooks.py:210] : Event before-call.chime.CreateAttendee: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:15:44,988 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateAttendee) with params: {'url_path': '/meetings/9398e993-c656-48b9-9757-eb6c75524287/attendees', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ExternalUserId": "xx", "Tags": [{"Key": "Attendee for meeting", "Value": "xx"}]}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings/9398e993-c656-48b9-9757-eb6c75524287/attendees', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:15:44,988 DEBUG: [hooks.py:210] : Event request-created.chime.CreateAttendee: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:15:44,988 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateAttendee: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:15:44,989 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:15:44,989 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings/9398e993-c656-48b9-9757-eb6c75524287/attendees
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T061544Z
+
+host;x-amz-date
+e8ea1dab228c3239a842b161a6855a32644049aed2d88497af37c035475afae0
+2021-06-06 16:15:44,989 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T061544Z
+20210606/us-east-1/chime/aws4_request
+cdc3e48b993bd5079a0fb41e0cb19bb4b7a6636e5c9b69ca301d8661ebf5295c
+2021-06-06 16:15:44,989 DEBUG: [auth.py:369] : Signature:
+fcc7318b59ca684465f318b90e7c388c4ccb15f7c1ba8b32e11d6239e7205bce
+2021-06-06 16:15:44,990 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings/9398e993-c656-48b9-9757-eb6c75524287/attendees, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T061544Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=fcc7318b59ca684465f318b90e7c388c4ccb15f7c1ba8b32e11d6239e7205bce', 'Content-Length': '82'}>
+2021-06-06 16:15:44,990 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:15:45,292 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings/9398e993-c656-48b9-9757-eb6c75524287/attendees HTTP/1.1" 201 213
+2021-06-06 16:15:45,293 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '39583724-2b8a-4453-b752-917478639ca8', 'Content-Type': 'application/json', 'Content-Length': '213', 'Date': 'Sun, 06 Jun 2021 06:15:44 GMT'}
+2021-06-06 16:15:45,294 DEBUG: [parsers.py:234] : Response body:
+b'{"Attendee":{"AttendeeId":"eece8e45-6167-b6c7-3ecc-fe23abc6b7fd","ExternalUserId":"xx","JoinToken":"ZWVjZThlNDUtNjE2Ny1iNmM3LTNlY2MtZmUyM2FiYzZiN2ZkOmYzYjg5ZTA2LWRkZjktNDViYi1hNWM3LWE0Njc5M2U3Y2JjZg","Tags":null}}'
+2021-06-06 16:15:45,295 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:15:45,295 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:15:45,296 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:15:45] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -
+2021-06-06 16:22:28,107 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:22:28] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:22:28,110 DEBUG: [app.py:56] : {'meeting_name': 'test'}
+2021-06-06 16:22:28,111 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:22:28,112 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:22:28,113 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "cef8663c-0806-4d69-9cc4-4b6b3a1d373f", "ExternalMeetingId": "test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:22:28,113 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:22:28,114 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:22:28,115 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:22:28,115 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T062228Z
+
+host;x-amz-date
+1f98f074ccd948bb6d9db6d1edd894bc7f1b37e2363d3b5aee0a160f91c8d962
+2021-06-06 16:22:28,115 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T062228Z
+20210606/us-east-1/chime/aws4_request
+499dbd3702b7bb10cc89e9f1523f1166e8936e138179ab9f9801ee37b1cd871e
+2021-06-06 16:22:28,116 DEBUG: [auth.py:369] : Signature:
+f6fb156cca321dc552f77a7a24e67bfda183c04d5d131a6deeed6b8ff487076b
+2021-06-06 16:22:28,116 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T062228Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=f6fb156cca321dc552f77a7a24e67bfda183c04d5d131a6deeed6b8ff487076b', 'Content-Length': '348'}>
+2021-06-06 16:22:28,117 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:22:28,118 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:22:29,636 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:22:29,637 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'a7a853ea-f1c3-4d72-b4c3-c7b35d084e36', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:22:29 GMT'}
+2021-06-06 16:22:29,638 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/3f187874-216c-41fb-8839-4631c88fcb3b","AudioHostUrl":"141eb442e138b74b7c198f54604819bf.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/3f187874-216c-41fb-8839-4631c88fcb3b","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/3f187874-216c-41fb-8839-4631c88fcb3b","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=3f187874-216c-41fb-8839-4631c88fcb3b","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/3f187874-216c-41fb-8839-4631c88fcb3b","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"3f187874-216c-41fb-8839-4631c88fcb3b"}}'
+2021-06-06 16:22:29,639 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:22:29,639 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:22:29,640 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : test                          
+2021-06-06 16:22:29,640 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,640 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 141eb442e138b74b7c198f54604819bf.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:22:29,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:22:29,642 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:22:29,642 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 3f187874-216c-41fb-8839-4631c88fcb3b
+2021-06-06 16:22:29,642 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:22:29,642 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:22:29,642 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:22:29 GMT 
+2021-06-06 16:22:29,643 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : a7a853ea-f1c3-4d72-b4c3-c7b35d084e36
+2021-06-06 16:22:29,643 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:22:29,643 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : a7a853ea-f1c3-4d72-b4c3-c7b35d084e36
+2021-06-06 16:22:29,643 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:22:29,644 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:22:29] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:25:10,402 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:25:10] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:25:10,404 DEBUG: [app.py:56] : {'meeting_name': 'test'}
+2021-06-06 16:25:10,405 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:25:10,405 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:25:10,406 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "fcd2e65e-7824-4cef-a79c-43ff4329f951", "ExternalMeetingId": "test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:25:10,406 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:25:10,406 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:25:10,407 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:25:10,407 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T062510Z
+
+host;x-amz-date
+8a295adc9e9baa08431bea58acf35dce7b3190df53853beee52968b95a4cdb79
+2021-06-06 16:25:10,407 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T062510Z
+20210606/us-east-1/chime/aws4_request
+52463ef44fc2d727420fb03270a115a734e46500788f84c8ffecccb321b6f8e5
+2021-06-06 16:25:10,407 DEBUG: [auth.py:369] : Signature:
+fc612f4e78d6b13f6feea3b272bb0f302ff3c1db4dbd790537a4fc481f292e49
+2021-06-06 16:25:10,407 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T062510Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=fc612f4e78d6b13f6feea3b272bb0f302ff3c1db4dbd790537a4fc481f292e49', 'Content-Length': '348'}>
+2021-06-06 16:25:10,408 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:25:10,408 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:25:11,950 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:25:11,951 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'a9d41f74-1846-44d9-a24d-854eadb18c0f', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:25:11 GMT'}
+2021-06-06 16:25:11,951 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m1.ue1.app.chime.aws:443/calls/d2118f6e-abe3-49b6-a95c-432134ded9c5","AudioHostUrl":"4fde8dd7af7c5cce19d6b918ef8cdff1.k.m1.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/d2118f6e-abe3-49b6-a95c-432134ded9c5","ScreenSharingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/d2118f6e-abe3-49b6-a95c-432134ded9c5","ScreenViewingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=d2118f6e-abe3-49b6-a95c-432134ded9c5","SignalingUrl":"wss://signal.m1.ue1.app.chime.aws/control/d2118f6e-abe3-49b6-a95c-432134ded9c5","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"d2118f6e-abe3-49b6-a95c-432134ded9c5"}}'
+2021-06-06 16:25:11,953 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:25:11,953 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:25:11,954 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : test                          
+2021-06-06 16:25:11,954 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m1.ue1.app.chime.aws:443/calls/d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,954 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 4fde8dd7af7c5cce19d6b918ef8cdff1.k.m1.ue1.app.chime.aws:3478
+2021-06-06 16:25:11,954 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,954 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,955 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,955 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m1.ue1.app.chime.aws/control/d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,955 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:25:11,955 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:25:11,955 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : d2118f6e-abe3-49b6-a95c-432134ded9c5
+2021-06-06 16:25:11,956 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:25:11,956 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:25:11,956 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:25:11 GMT 
+2021-06-06 16:25:11,956 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : a9d41f74-1846-44d9-a24d-854eadb18c0f
+2021-06-06 16:25:11,956 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:25:11,957 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : a9d41f74-1846-44d9-a24d-854eadb18c0f
+2021-06-06 16:25:11,957 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:25:11,958 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:25:11] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:25:39,182 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:25:39] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:25:39,184 DEBUG: [app.py:56] : {'meeting_name': 'test'}
+2021-06-06 16:25:39,184 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:25:39,185 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:25:39,185 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "910d2c6f-84de-4b64-9270-ff7571073399", "ExternalMeetingId": "test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:25:39,185 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:25:39,185 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:25:39,186 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:25:39,186 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T062539Z
+
+host;x-amz-date
+88e1a1efa9406f61ecb231cd7730f3f8a2660a4227212f207c5ae056d5bb129f
+2021-06-06 16:25:39,186 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T062539Z
+20210606/us-east-1/chime/aws4_request
+1ebfd088192a1af0879ef4b78fa6d7c0a2db4648593b1cf6894e10d01a00889e
+2021-06-06 16:25:39,186 DEBUG: [auth.py:369] : Signature:
+9ff08347d3ba237d8b6350e8354088fb931a60b85e4d78ed9abd57c817c392ce
+2021-06-06 16:25:39,186 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T062539Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=9ff08347d3ba237d8b6350e8354088fb931a60b85e4d78ed9abd57c817c392ce', 'Content-Length': '348'}>
+2021-06-06 16:25:39,187 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:25:39,672 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:25:39,673 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'deee2359-a131-477a-9ced-a06f8809aa16', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:25:39 GMT'}
+2021-06-06 16:25:39,673 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/f486785c-0dae-456e-b170-7a9a38b3697c","AudioHostUrl":"61fd8a2f0e293367513965c302c402ec.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/f486785c-0dae-456e-b170-7a9a38b3697c","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/f486785c-0dae-456e-b170-7a9a38b3697c","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=f486785c-0dae-456e-b170-7a9a38b3697c","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/f486785c-0dae-456e-b170-7a9a38b3697c","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"f486785c-0dae-456e-b170-7a9a38b3697c"}}'
+2021-06-06 16:25:39,674 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:25:39,675 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:25:39,675 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : test                          
+2021-06-06 16:25:39,675 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 61fd8a2f0e293367513965c302c402ec.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,676 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : f486785c-0dae-456e-b170-7a9a38b3697c
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:25:39 GMT 
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : deee2359-a131-477a-9ced-a06f8809aa16
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:25:39,677 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : deee2359-a131-477a-9ced-a06f8809aa16
+2021-06-06 16:25:39,678 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:25:39,679 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:25:39] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:28:05,023 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:28:05] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:28:05,025 DEBUG: [app.py:56] : {'meeting_name': 'test'}
+2021-06-06 16:28:05,026 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:28:05,027 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:28:05,028 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "d93a1c0c-ee98-4f89-8c3f-25a8c1e61c6b", "ExternalMeetingId": "test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:28:05,028 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:28:05,028 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:28:05,029 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:28:05,029 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T062805Z
+
+host;x-amz-date
+a373e2de421a64dca58defb6fb012dc785bb2b38a793558b780855df30d7eb36
+2021-06-06 16:28:05,029 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T062805Z
+20210606/us-east-1/chime/aws4_request
+0daab19a3ddb219722fdb5c9c1193044125227603a5be42d69a7802746802bf4
+2021-06-06 16:28:05,029 DEBUG: [auth.py:369] : Signature:
+8856bc570fd523297229e9c1fdded4f68a2fa84bae66c931f187df976c4955e3
+2021-06-06 16:28:05,029 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T062805Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=8856bc570fd523297229e9c1fdded4f68a2fa84bae66c931f187df976c4955e3', 'Content-Length': '348'}>
+2021-06-06 16:28:05,030 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:28:05,030 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:28:06,562 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:28:06,563 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '2bfcbe30-5e28-4a25-a212-ddd4b82b3811', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:28:06 GMT'}
+2021-06-06 16:28:06,564 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m1.ue1.app.chime.aws:443/calls/ffc1e022-588d-4f5a-bb6c-5152a525b07a","AudioHostUrl":"927906a376ecf5779621dc87301af415.k.m1.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/ffc1e022-588d-4f5a-bb6c-5152a525b07a","ScreenSharingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/ffc1e022-588d-4f5a-bb6c-5152a525b07a","ScreenViewingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=ffc1e022-588d-4f5a-bb6c-5152a525b07a","SignalingUrl":"wss://signal.m1.ue1.app.chime.aws/control/ffc1e022-588d-4f5a-bb6c-5152a525b07a","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"ffc1e022-588d-4f5a-bb6c-5152a525b07a"}}'
+2021-06-06 16:28:06,565 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:28:06,565 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:28:06,566 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : test                          
+2021-06-06 16:28:06,566 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m1.ue1.app.chime.aws:443/calls/ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,566 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 927906a376ecf5779621dc87301af415.k.m1.ue1.app.chime.aws:3478
+2021-06-06 16:28:06,567 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,567 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,567 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,567 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m1.ue1.app.chime.aws/control/ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,567 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:28:06,568 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:28:06,568 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : ffc1e022-588d-4f5a-bb6c-5152a525b07a
+2021-06-06 16:28:06,568 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:28:06,568 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:28:06,568 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:28:06 GMT 
+2021-06-06 16:28:06,569 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 2bfcbe30-5e28-4a25-a212-ddd4b82b3811
+2021-06-06 16:28:06,569 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:28:06,569 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 2bfcbe30-5e28-4a25-a212-ddd4b82b3811
+2021-06-06 16:28:06,569 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:28:06,570 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:28:06] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:32:47,729 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:32:47] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:32:47,732 DEBUG: [app.py:56] : {'meeting_name': 'sdfadfs'}
+2021-06-06 16:32:47,732 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:32:47,733 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:32:47,733 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "5c630c0f-b582-43fe-9eb2-0e6bb8c01e8b", "ExternalMeetingId": "sdfadfs", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:32:47,733 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:32:47,733 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:32:47,734 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:32:47,734 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T063247Z
+
+host;x-amz-date
+139e25fd5e47b62dc353a3260ca72067d311f6fb85606c450ca3436f54c93694
+2021-06-06 16:32:47,734 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T063247Z
+20210606/us-east-1/chime/aws4_request
+79538fdf1532877e27e8162fd8dfb2ec83bfd263d735dcc0db19c06762bda7e0
+2021-06-06 16:32:47,734 DEBUG: [auth.py:369] : Signature:
+5eb8a84a80b5a9562351b57526d15137af5769a32c55b55123ad080986a5a5da
+2021-06-06 16:32:47,734 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T063247Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=5eb8a84a80b5a9562351b57526d15137af5769a32c55b55123ad080986a5a5da', 'Content-Length': '351'}>
+2021-06-06 16:32:47,735 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:32:47,735 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:32:49,975 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 913
+2021-06-06 16:32:49,976 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '6341c4cf-dcc9-4455-b3bb-77bded4674b0', 'Content-Type': 'application/json', 'Content-Length': '913', 'Date': 'Sun, 06 Jun 2021 06:32:49 GMT'}
+2021-06-06 16:32:49,976 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"sdfadfs","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/bef0dd74-4dc3-4ba0-9fce-94f0bd762199","AudioHostUrl":"d13d7560f4dbc689a5d6901df0bd27c8.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/bef0dd74-4dc3-4ba0-9fce-94f0bd762199","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/bef0dd74-4dc3-4ba0-9fce-94f0bd762199","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=bef0dd74-4dc3-4ba0-9fce-94f0bd762199","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/bef0dd74-4dc3-4ba0-9fce-94f0bd762199","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"bef0dd74-4dc3-4ba0-9fce-94f0bd762199"}}'
+2021-06-06 16:32:49,977 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:32:49,977 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:32:49,978 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : sdfadfs                       
+2021-06-06 16:32:49,978 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : d13d7560f4dbc689a5d6901df0bd27c8.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,979 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : bef0dd74-4dc3-4ba0-9fce-94f0bd762199
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 913                           
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:32:49 GMT 
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 6341c4cf-dcc9-4455-b3bb-77bded4674b0
+2021-06-06 16:32:49,980 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:32:49,981 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 6341c4cf-dcc9-4455-b3bb-77bded4674b0
+2021-06-06 16:32:49,981 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:32:49,982 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:32:49] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:33:23,358 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:33:23] "[37mOPTIONS /add-attendee HTTP/1.1[0m" 200 -
+2021-06-06 16:33:23,361 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateAttendee: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:33:23,362 DEBUG: [hooks.py:210] : Event before-call.chime.CreateAttendee: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:33:23,362 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateAttendee) with params: {'url_path': '/meetings/bef0dd74-4dc3-4ba0-9fce-94f0bd762199/attendees', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ExternalUserId": "xx", "Tags": [{"Key": "Attendee for meeting", "Value": "xx"}]}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings/bef0dd74-4dc3-4ba0-9fce-94f0bd762199/attendees', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:33:23,362 DEBUG: [hooks.py:210] : Event request-created.chime.CreateAttendee: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:33:23,363 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateAttendee: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:33:23,363 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:33:23,363 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings/bef0dd74-4dc3-4ba0-9fce-94f0bd762199/attendees
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T063323Z
+
+host;x-amz-date
+e8ea1dab228c3239a842b161a6855a32644049aed2d88497af37c035475afae0
+2021-06-06 16:33:23,363 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T063323Z
+20210606/us-east-1/chime/aws4_request
+315d2aa662096744a530dbb564e2fd06d1225acf2fa78b538c812ebb4b1a2e91
+2021-06-06 16:33:23,363 DEBUG: [auth.py:369] : Signature:
+4c05fcf0a53c3c3c4dc01199575f2b90c0cc0644b69fd76e472bb69ccd8202ff
+2021-06-06 16:33:23,364 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings/bef0dd74-4dc3-4ba0-9fce-94f0bd762199/attendees, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T063323Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=4c05fcf0a53c3c3c4dc01199575f2b90c0cc0644b69fd76e472bb69ccd8202ff', 'Content-Length': '82'}>
+2021-06-06 16:33:23,364 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:33:23,659 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings/bef0dd74-4dc3-4ba0-9fce-94f0bd762199/attendees HTTP/1.1" 201 213
+2021-06-06 16:33:23,661 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '0ad285c0-e81d-408d-8e30-865ca55fdb25', 'Content-Type': 'application/json', 'Content-Length': '213', 'Date': 'Sun, 06 Jun 2021 06:33:23 GMT'}
+2021-06-06 16:33:23,661 DEBUG: [parsers.py:234] : Response body:
+b'{"Attendee":{"AttendeeId":"72e60378-f307-c729-4c88-2f47471a8b45","ExternalUserId":"xx","JoinToken":"NzJlNjAzNzgtZjMwNy1jNzI5LTRjODgtMmY0NzQ3MWE4YjQ1OjZhN2NiOTgzLWQ2YzgtNGRkZC04YTE1LWViZDNiNTUzYjUxNw","Tags":null}}'
+2021-06-06 16:33:23,662 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:33:23,663 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:33:23,665 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:33:23] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -
+2021-06-06 16:35:50,878 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:35:50] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:35:50,881 DEBUG: [app.py:56] : {'meeting_name': 'ter'}
+2021-06-06 16:35:50,881 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7f84a91503a0>
+2021-06-06 16:35:50,882 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7f84a9154c10>
+2021-06-06 16:35:50,882 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "707c869a-ad24-4387-8e81-8e6e1caf7936", "ExternalMeetingId": "ter", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7f84a97e61f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:35:50,882 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f84a97e60a0>>
+2021-06-06 16:35:50,882 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7f84a9150280>
+2021-06-06 16:35:50,883 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:35:50,883 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T063550Z
+
+host;x-amz-date
+642a97d2153f92fd2aa5a369dbdb71fefe7df94fee108f59e912f6c0f8117ad8
+2021-06-06 16:35:50,883 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T063550Z
+20210606/us-east-1/chime/aws4_request
+c78f7f3a853ecdf1febdb24923c733b461be7b75e87150a10c00ab90306ee064
+2021-06-06 16:35:50,883 DEBUG: [auth.py:369] : Signature:
+ca83aa550d97ee73545c5e52bfbc613c99ba1b2830cdd2e813201a6154c4bbea
+2021-06-06 16:35:50,883 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T063550Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=ca83aa550d97ee73545c5e52bfbc613c99ba1b2830cdd2e813201a6154c4bbea', 'Content-Length': '347'}>
+2021-06-06 16:35:50,884 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:35:50,884 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:35:53,025 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 909
+2021-06-06 16:35:53,027 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'c4d0d15c-e27a-4609-b682-9375edfe2b03', 'Content-Type': 'application/json', 'Content-Length': '909', 'Date': 'Sun, 06 Jun 2021 06:35:52 GMT'}
+2021-06-06 16:35:53,027 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"ter","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b","AudioHostUrl":"53840cb2186e196e8e9b915362bd0a5b.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=8bf0c9fd-78de-4b01-9ebb-2b79b297be8b","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"8bf0c9fd-78de-4b01-9ebb-2b79b297be8b"}}'
+2021-06-06 16:35:53,028 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7f84a97e6b80>
+2021-06-06 16:35:53,028 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : ter                           
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 53840cb2186e196e8e9b915362bd0a5b.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:35:53,029 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 8bf0c9fd-78de-4b01-9ebb-2b79b297be8b
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 909                           
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:35:52 GMT 
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : c4d0d15c-e27a-4609-b682-9375edfe2b03
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : c4d0d15c-e27a-4609-b682-9375edfe2b03
+2021-06-06 16:35:53,030 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:35:53,031 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:35:53] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:38:30,938 INFO: [_internal.py:113] :  * Detected change in '/Users/rk/Desktop/my-github-repos/chime-server/app.py', reloading
+2021-06-06 16:38:32,234 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-06 16:38:32,828 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-06 16:38:32,847 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-06 16:38:38,034 INFO: [_internal.py:113] :  * Detected change in '/Users/rk/Desktop/my-github-repos/chime-server/app.py', reloading
+2021-06-06 16:38:39,229 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-06 16:38:39,493 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-06 16:38:39,501 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-06 16:38:51,475 INFO: [_internal.py:113] :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2021-06-06 16:38:51,479 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-06 16:38:51,735 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-06 16:38:51,744 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-06 16:39:19,233 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:39:19] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:39:19,237 DEBUG: [app.py:56] : {'meeting_name': 'asdfasdf'}
+2021-06-06 16:39:19,238 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7fe7a88083a0>
+2021-06-06 16:39:19,239 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7fe7a880cc10>
+2021-06-06 16:39:19,239 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "9b37d177-d942-43b0-9973-b910e1d88abd", "ExternalMeetingId": "asdfasdf", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7fe7b8f061f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:39:19,240 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7fe7b8f060a0>>
+2021-06-06 16:39:19,240 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7fe7a8808280>
+2021-06-06 16:39:19,241 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:39:19,241 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T063919Z
+
+host;x-amz-date
+d58354baa794e82ee9580b010b3572b8401744a33453397229c45fd452878d31
+2021-06-06 16:39:19,242 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T063919Z
+20210606/us-east-1/chime/aws4_request
+a63bd9d091fedffe547e2b8490a920761f8e04f7d73dc5887914e8ae929606ca
+2021-06-06 16:39:19,242 DEBUG: [auth.py:369] : Signature:
+a5bb45ab036a53761b99734fe09ab53ff5036570356e29f72a0581ad9f6e44cf
+2021-06-06 16:39:19,242 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T063919Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=a5bb45ab036a53761b99734fe09ab53ff5036570356e29f72a0581ad9f6e44cf', 'Content-Length': '352'}>
+2021-06-06 16:39:19,243 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:39:19,244 DEBUG: [connectionpool.py:939] : Starting new HTTPS connection (1): chime.us-east-1.amazonaws.com:443
+2021-06-06 16:39:20,574 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 914
+2021-06-06 16:39:20,576 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '8c6846a4-7e11-482a-a26a-09cc63cb5d8a', 'Content-Type': 'application/json', 'Content-Length': '914', 'Date': 'Sun, 06 Jun 2021 06:39:20 GMT'}
+2021-06-06 16:39:20,576 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"asdfasdf","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m2.ue1.app.chime.aws:443/calls/4e614b3d-7f20-4b6c-b19e-2c9806517a3d","AudioHostUrl":"650d56954096a4c96142385a6e068d06.k.m2.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/4e614b3d-7f20-4b6c-b19e-2c9806517a3d","ScreenSharingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/4e614b3d-7f20-4b6c-b19e-2c9806517a3d","ScreenViewingUrl":"wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=4e614b3d-7f20-4b6c-b19e-2c9806517a3d","SignalingUrl":"wss://signal.m2.ue1.app.chime.aws/control/4e614b3d-7f20-4b6c-b19e-2c9806517a3d","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"4e614b3d-7f20-4b6c-b19e-2c9806517a3d"}}'
+2021-06-06 16:39:20,579 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7fe7b8f06b80>
+2021-06-06 16:39:20,579 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:39:20,580 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : asdfasdf                      
+2021-06-06 16:39:20,580 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m2.ue1.app.chime.aws:443/calls/4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 650d56954096a4c96142385a6e068d06.k.m2.ue1.app.chime.aws:3478
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/v2/screen/4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m2.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m2.ue1.app.chime.aws/control/4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:39:20,581 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 4e614b3d-7f20-4b6c-b19e-2c9806517a3d
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 914                           
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:39:20 GMT 
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 8c6846a4-7e11-482a-a26a-09cc63cb5d8a
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:39:20,582 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 8c6846a4-7e11-482a-a26a-09cc63cb5d8a
+2021-06-06 16:39:20,583 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:39:20,584 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:39:20] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:41:34,212 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:41:34] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:41:34,214 DEBUG: [app.py:56] : {'meeting_name': 'sadfs'}
+2021-06-06 16:41:34,215 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7fe7a88083a0>
+2021-06-06 16:41:34,215 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7fe7a880cc10>
+2021-06-06 16:41:34,215 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "8913e0b1-a6f5-4add-8aee-259b0c20f4a2", "ExternalMeetingId": "sadfs", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7fe7b8f061f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:41:34,216 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7fe7b8f060a0>>
+2021-06-06 16:41:34,216 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7fe7a8808280>
+2021-06-06 16:41:34,216 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:41:34,216 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064134Z
+
+host;x-amz-date
+a25217dd04630e4c950a7e8aaf70d3f4a4708bbf3eae210abbb466f3b10b8f3f
+2021-06-06 16:41:34,217 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064134Z
+20210606/us-east-1/chime/aws4_request
+2e1d889a38311573bbff78d51e9e1d15f09e87a28555951938dea17549bb1a48
+2021-06-06 16:41:34,217 DEBUG: [auth.py:369] : Signature:
+658ffee888743598fe11d7a33c5bf01980c5dfb241ce0e0236a1fe8244f8506c
+2021-06-06 16:41:34,217 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064134Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=658ffee888743598fe11d7a33c5bf01980c5dfb241ce0e0236a1fe8244f8506c', 'Content-Length': '349'}>
+2021-06-06 16:41:34,217 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:41:34,218 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:41:36,033 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 911
+2021-06-06 16:41:36,034 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '7d0cb68c-a8cc-45db-afaf-aa862c7a6251', 'Content-Type': 'application/json', 'Content-Length': '911', 'Date': 'Sun, 06 Jun 2021 06:41:35 GMT'}
+2021-06-06 16:41:36,035 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"sadfs","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m3.ue1.app.chime.aws:443/calls/3184dd54-b5ab-4350-9163-8964d4ff9fa1","AudioHostUrl":"432c45739d20d0ef445d12d0edf20053.k.m3.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/3184dd54-b5ab-4350-9163-8964d4ff9fa1","ScreenSharingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/3184dd54-b5ab-4350-9163-8964d4ff9fa1","ScreenViewingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=3184dd54-b5ab-4350-9163-8964d4ff9fa1","SignalingUrl":"wss://signal.m3.ue1.app.chime.aws/control/3184dd54-b5ab-4350-9163-8964d4ff9fa1","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"3184dd54-b5ab-4350-9163-8964d4ff9fa1"}}'
+2021-06-06 16:41:36,036 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7fe7b8f06b80>
+2021-06-06 16:41:36,037 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:41:36,037 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : sadfs                         
+2021-06-06 16:41:36,037 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m3.ue1.app.chime.aws:443/calls/3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,038 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 432c45739d20d0ef445d12d0edf20053.k.m3.ue1.app.chime.aws:3478
+2021-06-06 16:41:36,038 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,038 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,038 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,038 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m3.ue1.app.chime.aws/control/3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,039 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:41:36,039 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:41:36,039 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 3184dd54-b5ab-4350-9163-8964d4ff9fa1
+2021-06-06 16:41:36,039 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 911                           
+2021-06-06 16:41:36,039 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:41:36,040 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:41:35 GMT 
+2021-06-06 16:41:36,040 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 7d0cb68c-a8cc-45db-afaf-aa862c7a6251
+2021-06-06 16:41:36,040 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:41:36,040 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 7d0cb68c-a8cc-45db-afaf-aa862c7a6251
+2021-06-06 16:41:36,040 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:41:36,042 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:41:36] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:42:41,713 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:42:41] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:42:41,715 DEBUG: [app.py:56] : {'meeting_name': 'sdfasdf'}
+2021-06-06 16:42:41,715 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7fe7a88083a0>
+2021-06-06 16:42:41,716 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7fe7a880cc10>
+2021-06-06 16:42:41,716 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "fadec882-e318-4ebb-bf86-f3e5e4c97aca", "ExternalMeetingId": "sdfasdf", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7fe7b8f061f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:42:41,716 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7fe7b8f060a0>>
+2021-06-06 16:42:41,717 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7fe7a8808280>
+2021-06-06 16:42:41,718 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:42:41,718 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064241Z
+
+host;x-amz-date
+9c05423a9675b048c96217d48bf33d46e46dbacf42477ddbc1530c654d779a39
+2021-06-06 16:42:41,718 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064241Z
+20210606/us-east-1/chime/aws4_request
+292a03822e49be75bdd17cd4510ca135415c3175a54d7cab6157266f0973616a
+2021-06-06 16:42:41,718 DEBUG: [auth.py:369] : Signature:
+72175fc37b2c0c31efc8a71aa9e16a56621d58ade709a3d599897e36a81d573b
+2021-06-06 16:42:41,719 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064241Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=72175fc37b2c0c31efc8a71aa9e16a56621d58ade709a3d599897e36a81d573b', 'Content-Length': '351'}>
+2021-06-06 16:42:41,720 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:42:41,720 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:42:43,012 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 913
+2021-06-06 16:42:43,014 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '945e0a0d-7b29-479f-8c70-28169ff67992', 'Content-Type': 'application/json', 'Content-Length': '913', 'Date': 'Sun, 06 Jun 2021 06:42:42 GMT'}
+2021-06-06 16:42:43,014 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"sdfasdf","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m1.ue1.app.chime.aws:443/calls/85d652bd-5f77-42c6-b30d-cfa75a1b2657","AudioHostUrl":"0cb7ec431a30853fb91705f3f3a4be00.k.m1.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/85d652bd-5f77-42c6-b30d-cfa75a1b2657","ScreenSharingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/85d652bd-5f77-42c6-b30d-cfa75a1b2657","ScreenViewingUrl":"wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=85d652bd-5f77-42c6-b30d-cfa75a1b2657","SignalingUrl":"wss://signal.m1.ue1.app.chime.aws/control/85d652bd-5f77-42c6-b30d-cfa75a1b2657","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"85d652bd-5f77-42c6-b30d-cfa75a1b2657"}}'
+2021-06-06 16:42:43,015 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7fe7b8f06b80>
+2021-06-06 16:42:43,016 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:42:43,016 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : sdfasdf                       
+2021-06-06 16:42:43,017 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m1.ue1.app.chime.aws:443/calls/85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,017 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 0cb7ec431a30853fb91705f3f3a4be00.k.m1.ue1.app.chime.aws:3478
+2021-06-06 16:42:43,017 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,017 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/v2/screen/85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,017 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m1.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,018 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m1.ue1.app.chime.aws/control/85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,018 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:42:43,018 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:42:43,018 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : 85d652bd-5f77-42c6-b30d-cfa75a1b2657
+2021-06-06 16:42:43,018 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 913                           
+2021-06-06 16:42:43,019 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:42:43,019 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:42:42 GMT 
+2021-06-06 16:42:43,019 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 945e0a0d-7b29-479f-8c70-28169ff67992
+2021-06-06 16:42:43,019 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:42:43,020 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 945e0a0d-7b29-479f-8c70-28169ff67992
+2021-06-06 16:42:43,020 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:42:43,022 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:42:43] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:45:34,409 INFO: [_internal.py:113] :  * Detected change in '/Users/rk/Desktop/my-github-repos/chime-server/app.py', reloading
+2021-06-06 16:45:35,570 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-06 16:45:36,408 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-06 16:45:36,425 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-06 16:45:41,639 INFO: [_internal.py:113] :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2021-06-06 16:45:41,642 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-06 16:45:41,894 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-06 16:45:41,903 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-06 16:45:55,261 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:45:55] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:45:55,265 DEBUG: [app.py:56] : {'meeting_name': 'test'}
+2021-06-06 16:45:55,266 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7ff840c783a0>
+2021-06-06 16:45:55,268 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7ff840c7dc10>
+2021-06-06 16:45:55,269 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "c75ac7fc-4441-46fa-94ac-c30dc9df5757", "ExternalMeetingId": "test", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7ff8413261f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:45:55,269 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7ff8413260a0>>
+2021-06-06 16:45:55,270 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7ff840c78280>
+2021-06-06 16:45:55,271 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:45:55,271 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064555Z
+
+host;x-amz-date
+502e38e8b0d5b7675376c4aae3b3267a2e1aa1d9a8ac628f4e79ec397542a4fe
+2021-06-06 16:45:55,271 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064555Z
+20210606/us-east-1/chime/aws4_request
+27571ae87637e72de3647b180d1664c76bbfa1dbceb8b9d77a90e746f2f548d8
+2021-06-06 16:45:55,271 DEBUG: [auth.py:369] : Signature:
+bdc1e0634b714798f7a79fc3542a790d1f98b41d036b38162cdfcaf0344e429b
+2021-06-06 16:45:55,271 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064555Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=bdc1e0634b714798f7a79fc3542a790d1f98b41d036b38162cdfcaf0344e429b', 'Content-Length': '348'}>
+2021-06-06 16:45:55,273 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:45:55,273 DEBUG: [connectionpool.py:939] : Starting new HTTPS connection (1): chime.us-east-1.amazonaws.com:443
+2021-06-06 16:45:56,636 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 910
+2021-06-06 16:45:56,638 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '69bc8579-9ab8-4d1a-a3d0-11e591589ad5', 'Content-Type': 'application/json', 'Content-Length': '910', 'Date': 'Sun, 06 Jun 2021 06:45:56 GMT'}
+2021-06-06 16:45:56,638 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"test","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m3.ue1.app.chime.aws:443/calls/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7","AudioHostUrl":"e75ecab59cb4a8080f60fec95218015d.k.m3.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7","ScreenSharingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7","ScreenViewingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=fe0eaf5d-cc62-4273-a078-b1c93d3e83f7","SignalingUrl":"wss://signal.m3.ue1.app.chime.aws/control/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"fe0eaf5d-cc62-4273-a078-b1c93d3e83f7"}}'
+2021-06-06 16:45:56,640 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7ff841326b80>
+2021-06-06 16:45:56,640 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:45:56,641 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : test                          
+2021-06-06 16:45:56,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m3.ue1.app.chime.aws:443/calls/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,641 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : e75ecab59cb4a8080f60fec95218015d.k.m3.ue1.app.chime.aws:3478
+2021-06-06 16:45:56,642 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,642 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,642 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,642 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m3.ue1.app.chime.aws/control/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,642 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:45:56,643 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:45:56,643 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : fe0eaf5d-cc62-4273-a078-b1c93d3e83f7
+2021-06-06 16:45:56,643 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 910                           
+2021-06-06 16:45:56,643 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:45:56,643 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:45:56 GMT 
+2021-06-06 16:45:56,644 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 69bc8579-9ab8-4d1a-a3d0-11e591589ad5
+2021-06-06 16:45:56,644 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:45:56,644 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 69bc8579-9ab8-4d1a-a3d0-11e591589ad5
+2021-06-06 16:45:56,644 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:45:56,646 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:45:56] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:46:06,389 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:46:06] "[37mOPTIONS /add-attendee HTTP/1.1[0m" 200 -
+2021-06-06 16:46:06,392 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateAttendee: calling handler <function generate_idempotent_uuid at 0x7ff840c783a0>
+2021-06-06 16:46:06,393 DEBUG: [hooks.py:210] : Event before-call.chime.CreateAttendee: calling handler <function inject_api_version_header_if_needed at 0x7ff840c7dc10>
+2021-06-06 16:46:06,393 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateAttendee) with params: {'url_path': '/meetings/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7/attendees', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ExternalUserId": "asdfasdf", "Tags": [{"Key": "Attendee for meeting", "Value": "asdfasdf"}]}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7/attendees', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7ff8413261f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:46:06,393 DEBUG: [hooks.py:210] : Event request-created.chime.CreateAttendee: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7ff8413260a0>>
+2021-06-06 16:46:06,393 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateAttendee: calling handler <function set_operation_specific_signer at 0x7ff840c78280>
+2021-06-06 16:46:06,394 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:46:06,394 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7/attendees
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064606Z
+
+host;x-amz-date
+0998fc6050a185cb5cbccfdefb4b660d47aa5534c14fef83f61b5bffa56ab270
+2021-06-06 16:46:06,395 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064606Z
+20210606/us-east-1/chime/aws4_request
+34c0c041aa8f8269b51b388b9fb69613d033a0a1d81fadb38f40b2c325131193
+2021-06-06 16:46:06,395 DEBUG: [auth.py:369] : Signature:
+c3c8fcc1217a31779f8d83e0fad133e5469171781530808f7d3d711ced0c6444
+2021-06-06 16:46:06,396 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7/attendees, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064606Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=c3c8fcc1217a31779f8d83e0fad133e5469171781530808f7d3d711ced0c6444', 'Content-Length': '94'}>
+2021-06-06 16:46:06,397 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:46:06,700 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings/fe0eaf5d-cc62-4273-a078-b1c93d3e83f7/attendees HTTP/1.1" 201 219
+2021-06-06 16:46:06,702 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': 'dfb44b01-138d-4b36-b805-07032334f9d5', 'Content-Type': 'application/json', 'Content-Length': '219', 'Date': 'Sun, 06 Jun 2021 06:46:06 GMT'}
+2021-06-06 16:46:06,703 DEBUG: [parsers.py:234] : Response body:
+b'{"Attendee":{"AttendeeId":"12f83ffd-34dc-adde-9c48-75757e81a957","ExternalUserId":"asdfasdf","JoinToken":"MTJmODNmZmQtMzRkYy1hZGRlLTljNDgtNzU3NTdlODFhOTU3OmJjNDZjZTEzLWUxZTAtNGI5ZS04OWY2LWMxNTY3YzA2ZmU0Yw","Tags":null}}'
+2021-06-06 16:46:06,704 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7ff841326b80>
+2021-06-06 16:46:06,704 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:46:06,706 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:46:06] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -
+2021-06-06 16:48:09,063 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:48:09] "[37mOPTIONS /create-meeting HTTP/1.1[0m" 200 -
+2021-06-06 16:48:09,065 DEBUG: [app.py:56] : {'meeting_name': 'asdfasdf'}
+2021-06-06 16:48:09,066 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateMeeting: calling handler <function generate_idempotent_uuid at 0x7ff840c783a0>
+2021-06-06 16:48:09,066 DEBUG: [hooks.py:210] : Event before-call.chime.CreateMeeting: calling handler <function inject_api_version_header_if_needed at 0x7ff840c7dc10>
+2021-06-06 16:48:09,066 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateMeeting) with params: {'url_path': '/meetings', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ClientRequestToken": "67067e21-b817-46a8-b0aa-8a4e4d630a9c", "ExternalMeetingId": "asdfasdf", "MediaRegion": "us-east-1", "Tags": [{"Key": "Name", "Value": "Chime meeting"}], "NotificationsConfiguration": {"SnsTopicArn": "arn:aws:sns:us-east-2:567463201961:chime-events-topic", "SqsQueueArn": "arn:aws:sqs:us-east-2:567463201961:chime-events-queue"}}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7ff8413261f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:48:09,067 DEBUG: [hooks.py:210] : Event request-created.chime.CreateMeeting: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7ff8413260a0>>
+2021-06-06 16:48:09,067 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateMeeting: calling handler <function set_operation_specific_signer at 0x7ff840c78280>
+2021-06-06 16:48:09,068 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:48:09,068 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064809Z
+
+host;x-amz-date
+d16c3beacfa5627f6426eaef075665de7433842f89de2f4173f14f977a15b34f
+2021-06-06 16:48:09,068 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064809Z
+20210606/us-east-1/chime/aws4_request
+ca4e9156be5409cc53270442294dbe11b537fbe280de768d10b79e39a821ac0a
+2021-06-06 16:48:09,068 DEBUG: [auth.py:369] : Signature:
+d219e75c57779bf46d7a838f0d45cb9f0beb62f27541a5c5ad5cc597eb46a28a
+2021-06-06 16:48:09,068 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064809Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=d219e75c57779bf46d7a838f0d45cb9f0beb62f27541a5c5ad5cc597eb46a28a', 'Content-Length': '352'}>
+2021-06-06 16:48:09,069 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:48:09,069 DEBUG: [connectionpool.py:271] : Resetting dropped connection: chime.us-east-1.amazonaws.com
+2021-06-06 16:48:10,921 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings HTTP/1.1" 201 914
+2021-06-06 16:48:10,923 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '164db360-7c48-4f4a-b4d9-6aa079de62fb', 'Content-Type': 'application/json', 'Content-Length': '914', 'Date': 'Sun, 06 Jun 2021 06:48:10 GMT'}
+2021-06-06 16:48:10,923 DEBUG: [parsers.py:234] : Response body:
+b'{"Meeting":{"ExternalMeetingId":"asdfasdf","MediaPlacement":{"AudioFallbackUrl":"wss://haxrp.m3.ue1.app.chime.aws:443/calls/e645ce41-25fd-48be-8be2-cfd5e84c72c0","AudioHostUrl":"1cc85cd26e180d3cc1e729971643453d.k.m3.ue1.app.chime.aws:3478","EventIngestionUrl":"data.svc.ue1.ingest.chime.aws/v1/client-events","ScreenDataUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/e645ce41-25fd-48be-8be2-cfd5e84c72c0","ScreenSharingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/e645ce41-25fd-48be-8be2-cfd5e84c72c0","ScreenViewingUrl":"wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=e645ce41-25fd-48be-8be2-cfd5e84c72c0","SignalingUrl":"wss://signal.m3.ue1.app.chime.aws/control/e645ce41-25fd-48be-8be2-cfd5e84c72c0","TurnControlUrl":"https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"},"MediaRegion":"us-east-1","MeetingId":"e645ce41-25fd-48be-8be2-cfd5e84c72c0"}}'
+2021-06-06 16:48:10,925 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateMeeting: calling handler <botocore.retryhandler.RetryHandler object at 0x7ff841326b80>
+2021-06-06 16:48:10,925 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:48:10,926 DEBUG: [app.py:81] : Meeting.ExternalMeetingId                                              : asdfasdf                      
+2021-06-06 16:48:10,926 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioFallbackUrl                                : wss://haxrp.m3.ue1.app.chime.aws:443/calls/e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,926 DEBUG: [app.py:81] : Meeting.MediaPlacement.AudioHostUrl                                    : 1cc85cd26e180d3cc1e729971643453d.k.m3.ue1.app.chime.aws:3478
+2021-06-06 16:48:10,927 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenDataUrl                                   : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,927 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenSharingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,927 DEBUG: [app.py:81] : Meeting.MediaPlacement.ScreenViewingUrl                                : wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,927 DEBUG: [app.py:81] : Meeting.MediaPlacement.SignalingUrl                                    : wss://signal.m3.ue1.app.chime.aws/control/e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,927 DEBUG: [app.py:81] : Meeting.MediaPlacement.TurnControlUrl                                  : https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions
+2021-06-06 16:48:10,928 DEBUG: [app.py:81] : Meeting.MediaRegion                                                    : us-east-1                     
+2021-06-06 16:48:10,928 DEBUG: [app.py:81] : Meeting.MeetingId                                                      : e645ce41-25fd-48be-8be2-cfd5e84c72c0
+2021-06-06 16:48:10,928 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-length                            : 914                           
+2021-06-06 16:48:10,928 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.content-type                              : application/json              
+2021-06-06 16:48:10,928 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.date                                      : Sun, 06 Jun 2021 06:48:10 GMT 
+2021-06-06 16:48:10,929 DEBUG: [app.py:81] : ResponseMetadata.HTTPHeaders.x-amzn-requestid                          : 164db360-7c48-4f4a-b4d9-6aa079de62fb
+2021-06-06 16:48:10,929 DEBUG: [app.py:81] : ResponseMetadata.HTTPStatusCode                                        : 201                           
+2021-06-06 16:48:10,929 DEBUG: [app.py:81] : ResponseMetadata.RequestId                                             : 164db360-7c48-4f4a-b4d9-6aa079de62fb
+2021-06-06 16:48:10,929 DEBUG: [app.py:81] : ResponseMetadata.RetryAttempts                                         : 0                             
+2021-06-06 16:48:10,931 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:48:10] "[37mPOST /create-meeting HTTP/1.1[0m" 201 -
+2021-06-06 16:48:16,385 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:48:16] "[37mOPTIONS /add-attendee HTTP/1.1[0m" 200 -
+2021-06-06 16:48:16,387 DEBUG: [hooks.py:210] : Event before-parameter-build.chime.CreateAttendee: calling handler <function generate_idempotent_uuid at 0x7ff840c783a0>
+2021-06-06 16:48:16,388 DEBUG: [hooks.py:210] : Event before-call.chime.CreateAttendee: calling handler <function inject_api_version_header_if_needed at 0x7ff840c7dc10>
+2021-06-06 16:48:16,388 DEBUG: [endpoint.py:100] : Making request for OperationModel(name=CreateAttendee) with params: {'url_path': '/meetings/e645ce41-25fd-48be-8be2-cfd5e84c72c0/attendees', 'query_string': {}, 'method': 'POST', 'headers': {'User-Agent': 'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30'}, 'body': b'{"ExternalUserId": "sadfgsdaf", "Tags": [{"Key": "Attendee for meeting", "Value": "sadfgsdaf"}]}', 'url': 'https://chime.us-east-1.amazonaws.com/meetings/e645ce41-25fd-48be-8be2-cfd5e84c72c0/attendees', 'context': {'client_region': 'aws-global', 'client_config': <botocore.config.Config object at 0x7ff8413261f0>, 'has_streaming_input': False, 'auth_type': None}}
+2021-06-06 16:48:16,388 DEBUG: [hooks.py:210] : Event request-created.chime.CreateAttendee: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7ff8413260a0>>
+2021-06-06 16:48:16,389 DEBUG: [hooks.py:210] : Event choose-signer.chime.CreateAttendee: calling handler <function set_operation_specific_signer at 0x7ff840c78280>
+2021-06-06 16:48:16,389 DEBUG: [auth.py:364] : Calculating signature using v4 auth.
+2021-06-06 16:48:16,389 DEBUG: [auth.py:365] : CanonicalRequest:
+POST
+/meetings/e645ce41-25fd-48be-8be2-cfd5e84c72c0/attendees
+
+host:chime.us-east-1.amazonaws.com
+x-amz-date:20210606T064816Z
+
+host;x-amz-date
+6fcfbf9f170b37235404f0a7c89b19a2e5c635e1ae1098beecfee9b14fba88dd
+2021-06-06 16:48:16,389 DEBUG: [auth.py:367] : StringToSign:
+AWS4-HMAC-SHA256
+20210606T064816Z
+20210606/us-east-1/chime/aws4_request
+3666abb2c2902bbb238d51907a38050f8b4c778e08638881e200978dcfe4c27b
+2021-06-06 16:48:16,390 DEBUG: [auth.py:369] : Signature:
+fbc5a3671c68721aceb454ab3ec419cbbde8dc7a9b73bc31b5ed7e05a75e3888
+2021-06-06 16:48:16,390 DEBUG: [endpoint.py:187] : Sending http request: <AWSPreparedRequest stream_output=False, method=POST, url=https://chime.us-east-1.amazonaws.com/meetings/e645ce41-25fd-48be-8be2-cfd5e84c72c0/attendees, headers={'User-Agent': b'Boto3/1.17.28 Python/3.8.5 Darwin/20.5.0 Botocore/1.20.30', 'X-Amz-Date': b'20210606T064816Z', 'Authorization': b'AWS4-HMAC-SHA256 Credential=AKIAYIH3RJSUR27TMBHO/20210606/us-east-1/chime/aws4_request, SignedHeaders=host;x-amz-date, Signature=fbc5a3671c68721aceb454ab3ec419cbbde8dc7a9b73bc31b5ed7e05a75e3888', 'Content-Length': '96'}>
+2021-06-06 16:48:16,391 DEBUG: [httpsession.py:49] : Certificate path: /Users/rk/anaconda/anaconda3/lib/python3.8/site-packages/certifi/cacert.pem
+2021-06-06 16:48:16,679 DEBUG: [connectionpool.py:433] : https://chime.us-east-1.amazonaws.com:443 "POST /meetings/e645ce41-25fd-48be-8be2-cfd5e84c72c0/attendees HTTP/1.1" 201 220
+2021-06-06 16:48:16,681 DEBUG: [parsers.py:233] : Response headers: {'x-amzn-RequestId': '6855e367-d768-471f-8fe0-1a27768136c7', 'Content-Type': 'application/json', 'Content-Length': '220', 'Date': 'Sun, 06 Jun 2021 06:48:16 GMT'}
+2021-06-06 16:48:16,682 DEBUG: [parsers.py:234] : Response body:
+b'{"Attendee":{"AttendeeId":"b4cd2796-c7d0-87cd-dbcf-059d367dd9c6","ExternalUserId":"sadfgsdaf","JoinToken":"YjRjZDI3OTYtYzdkMC04N2NkLWRiY2YtMDU5ZDM2N2RkOWM2OmQyMDgxMTYxLWFhNGQtNGI0MC05N2M2LTEwZTQ5YjZkY2JhNw","Tags":null}}'
+2021-06-06 16:48:16,683 DEBUG: [hooks.py:210] : Event needs-retry.chime.CreateAttendee: calling handler <botocore.retryhandler.RetryHandler object at 0x7ff841326b80>
+2021-06-06 16:48:16,683 DEBUG: [retryhandler.py:187] : No retry needed.
+2021-06-06 16:48:16,685 INFO: [_internal.py:113] : 127.0.0.1 - - [06/Jun/2021 16:48:16] "[37mPOST /add-attendee HTTP/1.1[0m" 201 -

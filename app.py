@@ -80,7 +80,8 @@ def create_meeting():
     for key, value in sorted(flatten_json(response).items()):
         app.logger.debug('{:70} : {:30}'.format(key, str(value)))
 
-    return jsonify(response), 201
+    meeting = {'Meeting': response['Meeting']}
+    return jsonify(meeting), 201
 
 
 @app.route('/add-attendee', methods=['POST', 'OPTIONS'])
@@ -110,7 +111,8 @@ def add_attendee():
         app.logger.error(str(err))
         return jsonify(str(err)), 503
 
-    return jsonify(response), 201
+    attendee = {'Attendee': response['Attendee']}
+    return jsonify(attendee), 201
 
 
 if __name__ == '__main__':
