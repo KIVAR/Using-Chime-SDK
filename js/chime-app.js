@@ -93,7 +93,24 @@ function updateEvents(msg) {
     eventsList.appendChild(listElement);
 }
 
-function createSession() {
+async function joinMeeting() {
+    createSession();
+
+    const observer2 = {
+        audioVideoDidStart: () => {
+            updateEvents('Audio, Video started');
+        }
+    };
+
+    const audioElement = document.getElementById('micro-phone-audio');
+    // meetingSession.audioVideo.bindAudioElement(audioElement);
+
+    meetingSession.audioVideo.bindAudioElement(audioElement);
+    meetingSession.audioVideo.addObserver(observer2);
+    meetingSession.audioVideo.start();
+}
+
+async function createSession() {
     const logger = new ChimeSDK.ConsoleLogger('MyLogger', ChimeSDK.LogLevel.INFO);
     const deviceController = new ChimeSDK.DefaultDeviceController(logger);
 
@@ -106,7 +123,7 @@ function createSession() {
         deviceController
     );
 
-    listAudioVideoDevices();
+    await setupAudioVideoDevices();
 
     // Use case #23
     // Subscribe to attendee presence changes
@@ -166,52 +183,55 @@ function subscribeToAttendeePresenceChanges() {
 }
 
 
-async function listAudioVideoDevices() {
+
+async function setupAudioVideoDevices() {
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
     audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
     videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
 
-    // An array of MediaDeviceInfo objects
-    audioInputDevices.forEach(mediaDeviceInfo => {
-        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
-    });
-
-    // An array of MediaDeviceInfo objects
-    audioOutputDevices.forEach(mediaDeviceInfo => {
-        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
-    });
-
-    // An array of MediaDeviceInfo objects
-    videoInputDevices.forEach(mediaDeviceInfo => {
-        updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
-    });
-}
-
-async function enableAudioInput() {
     // Setup Audio Input Device
     const audioInputDeviceInfo = audioInputDevices[0];
-    await meetingSession.audioVideo.chooseAudioInputDevice(
-        audioInputDeviceInfo.deviceId
-    );
-}
+    const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
+    await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
 
-async function enableAudioOutput() {
     // Setup Audio Output Device
     const audioOutputDeviceInfo = audioOutputDevices[0];
-    await meetingSession.audioVideo.chooseAudioOutputDevice(
-        audioOutputDeviceInfo.deviceId
-    );
-}
+    const firstAudioOutputDevice = audioOutputDeviceInfo.deviceId;
+    await meetingSession.audioVideo.chooseAudioOutputDevice(firstAudioOutputDevice);
 
-async function enableVideoInput() {
     // Setup Video Input Device
     const videoInputDeviceInfo = videoInputDevices[0];
 
     if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
-        await meetingSession.audioVideo.chooseVideoInputDevice(
-            videoInputDeviceInfo.deviceId
-        );
+        const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
+        await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
     }
+}
+
+async function enableAudioInput() {
+    // Setup Audio Input Device
+    // const audioInputDeviceInfo = audioInputDevices[0];
+    // await meetingSession.audioVideo.chooseAudioInputDevice(
+    //     audioInputDeviceInfo.deviceId
+    // );
+}
+
+async function enableAudioOutput() {
+    // Setup Audio Output Device
+    // const audioOutputDeviceInfo = audioOutputDevices[0];
+    // await meetingSession.audioVideo.chooseAudioOutputDevice(
+    //     audioOutputDeviceInfo.deviceId
+    // );
+}
+
+async function enableVideoInput() {
+    // Setup Video Input Device
+    // const videoInputDeviceInfo = videoInputDevices[0];
+
+    // if (videoInputDeviceInfo !== undefined && videoInputDeviceInfo !== null) {
+    //     const firstVideoDeviceId = videoInputDeviceInfo.deviceId;
+    //     await meetingSession.audioVideo.chooseVideoInputDevice(firstVideoDeviceId);
+    // }
 
     // Use case 13. Start sharing your video.
     const videoElement = document.getElementById('chime-video');
@@ -256,19 +276,3 @@ function monitorChangeInDevices() {
     meetingSession.audioVideo.addDeviceChangeObserver(observer);
 }
 
-async function joinMeeting() {
-    createSession();
-
-    const observer2 = {
-        audioVideoDidStart: () => {
-            updateEvents('Audio, Video started');
-        }
-    };
-
-    const audioElement = document.getElementById('micro-phone-audio');
-    // meetingSession.audioVideo.bindAudioElement(audioElement);
-
-    meetingSession.audioVideo.bindAudioElement(audioElement);
-    meetingSession.audioVideo.addObserver(observer2);
-    meetingSession.audioVideo.start();
-}
