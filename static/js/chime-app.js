@@ -81,10 +81,10 @@ function addAttendee() {
     let url = "http://localhost:5000/add-attendee";
 
     let payload = {};
-    let userMeetingId = document.getElementById('meeting-id').value.trim();
+    let attendeeMeetingName = document.getElementById('attendee-meeting-name').value.trim();
     let attendeeName = document.getElementById('attendee-name').value.trim();
 
-    payload['meeting_id'] = userMeetingId;
+    payload['attendee_meeting_name'] = attendeeMeetingName;
     payload['attendee_name'] = attendeeName;
 
     xhr.open('POST', url, true);
@@ -93,11 +93,13 @@ function addAttendee() {
 
     xhr.onload = function () {
         response = JSON.parse(this.responseText);
-        attendee = response;
+        console.log(response);
+        meeting = response.meeting;
+        attendee = response.attendee.Attendee;
 
         if (this.status === 201) {
-            attendeeId = response.Attendee.AttendeeId;
-            joinToken = response.Attendee.joinToken;
+            attendeeId = attendee.AttendeeId;
+            joinToken = attendee.joinToken;
             updateEvents('Attendee added ' + attendeeId);
         } else {
             updateEvents(response);

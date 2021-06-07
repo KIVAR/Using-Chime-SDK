@@ -10,6 +10,7 @@ from flask_cors import cross_origin
 
 session = boto3.Session(profile_name='default')
 chime = session.client('chime')
+ddb = boto3.resource('dynamodb')
 
 app = Flask(__name__)
 
@@ -19,7 +20,8 @@ log_level = logging.DEBUG
 log_format = '%(asctime)s %(levelname)s: [%(filename)s:%(lineno)d] : %(message)s'
 
 logger = logging.getLogger()
-handler = RotatingFileHandler(logfile_location, maxBytes=10000000, backupCount=10)
+handler = RotatingFileHandler(
+    logfile_location, maxBytes=10000000, backupCount=10)
 formatter = logging.Formatter(log_format)
 handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -45,7 +47,6 @@ def flatten_json(json_doc):
     return out
 
 
-
 @app.route('/')
 @cross_origin()
 def login():
@@ -62,10 +63,11 @@ def create_meeting():
     payload = request.json
     app.logger.debug(payload)
     meeting_name = payload['meeting_name']
+    client_request_token = str(uuid.uuid4())
 
     try:
         response = chime.create_meeting(
-            ClientRequestToken=str(uuid.uuid4()),
+            ClientRequestToken=client_request_token,
             ExternalMeetingId=meeting_name,
             MediaRegion='us-east-1',
             Tags=[
@@ -88,6 +90,16 @@ def create_meeting():
         app.logger.debug('{:70} : {:30}'.format(key, str(value)))
 
     meeting = {'Meeting': response['Meeting']}
+
+    # Store meeting in DynamoDB table
+    item = {}
+    item['meeting_name'] = meeting_name
+    item['meeting_id'] = meeting['Meeting']['MeetingId']
+    item['meeting'] = meeting
+
+    table = ddb.Table("chime-meetings")
+    table.put_item(Item=item)
+
     return jsonify(meeting), 201
 
 
@@ -99,8 +111,20 @@ def add_attendee():
     :return:
     """
     payload = request.json
-    meeting_id = payload['meeting_id']
+    attendee_meeting_name = payload['attendee_meeting_name']
     attendee_name = payload['attendee_name']
+
+    # Retrieve meeting name from DynamoDB
+    table = ddb.Table("chime-meetings")
+
+    response = table.get_item(
+        Key={
+            'meeting_name': attendee_meeting_name,
+        }
+    )
+
+    meeting = response['Item']['meeting']
+    meeting_id = response['Item']['meeting_id']
 
     try:
         response = chime.create_attendee(
@@ -118,8 +142,12 @@ def add_attendee():
         app.logger.error(str(err))
         return jsonify(str(err)), 503
 
-    attendee = {'Attendee': response['Attendee']}
-    return jsonify(attendee), 201
+    result = {}
+    result['meeting'] = meeting
+    result['attendee'] = {'Attendee': response['Attendee']}
+
+    print(result)
+    return jsonify(result), 201
 
 
 if __name__ == '__main__':
