@@ -331,7 +331,7 @@ function monitorChangeInDevices() {
 /**
  * Mute/Unmute microphone
  */
-function muteUnmuteMicrophone() {
+async function muteUnmuteMicrophone() {
     const muted = meetingSession.audioVideo.realtimeIsLocalAudioMuted();
     if (muted) {
         updateEvents('You are muted');
@@ -339,6 +339,16 @@ function muteUnmuteMicrophone() {
         updateEvents('Others can listen to you!');
 
         microPhone.className = "fas fa-microphone mr-1 fa-2x";
+
+        audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
+
+        // Setup Audio Input Device
+        const audioInputDeviceInfo = audioInputDevices[0];
+        const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
+        await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
+
+        const audioElement = document.getElementById('micro-phone-audio');
+        meetingSession.audioVideo.bindAudioElement(audioElement);
     } else {
         updateEvents('Other attendees can hear your audio');
         meetingSession.audioVideo.realtimeMuteLocalAudio();
