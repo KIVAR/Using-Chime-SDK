@@ -34,12 +34,17 @@ joinMeetingBtn.addEventListener('click', joinMeeting);
 microPhone.addEventListener('click', muteUnmuteMicrophone);
 localVideo.addEventListener('click', shareStopLocalVideo);
 
+audioInputDevicesGroup = document.getElementById('audio-input-devices');
+audioInputDevicesGroup.addEventListener('click', changeAudioInputDevice);
+
 var meetingId;
 var attendeeId;
 var joinToken;
 var meeting = {};
 var attendee = {};
 var meetingSession;
+
+var audioDeviceId = 0;
 
 var audioInputDevices, audioOutputDevices, videoInputDevices;
 var localVideoCurrentlyShared = false;
@@ -92,17 +97,18 @@ function addAttendee() {
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
-        response = JSON.parse(this.responseText);
-        console.log(response);
-        meeting = response.meeting;
-        attendee = response.attendee.Attendee;
+        console.log(this.responseText);
 
         if (this.status === 201) {
+            response = JSON.parse(this.responseText);
+            meeting = response.meeting;
+            attendee = response.attendee.Attendee;
+
             attendeeId = attendee.AttendeeId;
             joinToken = attendee.joinToken;
             updateEvents('Attendee added ' + attendeeId);
         } else {
-            updateEvents(response);
+            updateEvents(this.responseText);
         }
     };
 }
@@ -214,6 +220,11 @@ async function setupAudioVideoDevices() {
     audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
     videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
 
+    audioInputDevices.forEach((device, index) => {
+        let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, 'Microphone #' + index);
+        document.getElementById('audio-input-devices').appendChild(radio);
+    });
+
     // Setup Audio Input Device
     const audioInputDeviceInfo = audioInputDevices[0];
     const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
@@ -223,6 +234,10 @@ async function setupAudioVideoDevices() {
     const audioOutputDeviceInfo = audioOutputDevices[0];
     const firstAudioOutputDevice = audioOutputDeviceInfo.deviceId;
     await meetingSession.audioVideo.chooseAudioOutputDevice(firstAudioOutputDevice);
+}
+
+function handleAudioInputDeviceSelection() {
+    console.log('Radio button clicked');
 }
 
 function shareStopLocalVideo() {
@@ -343,7 +358,7 @@ async function muteUnmuteMicrophone() {
         audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
 
         // Setup Audio Input Device
-        const audioInputDeviceInfo = audioInputDevices[0];
+        const audioInputDeviceInfo = audioInputDevices[audioDeviceId];
         const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
         await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
 
@@ -356,6 +371,14 @@ async function muteUnmuteMicrophone() {
 
         microPhone.className = "fas fa-microphone-slash mr-1 fa-2x";
     }
+}
+
+function changeAudioInputDevice(e) {
+    let index = e.target.getAttribute('index');
+    audioDeviceId = parseInt(index);
+
+    console.log('Audio Device Id');
+    console.log(audioDeviceId);
 }
 
 /**
@@ -429,3 +452,27 @@ function videoMultipleAttendeeVideos() {
 
     meetingSession.audioVideo.addObserver(observer);
 }
+
+function createRadioButton(group, id, value, checked, labelText) {
+    let div = document.createElement('div');
+    div.className = 'form-check';
+
+    let input = document.createElement('input');
+    input.className = 'form-check-input';
+    input.type = 'radio';
+    input.name = group;
+    input.id = id;
+    input.value = value;
+    input.checked = checked;
+    input.setAttribute('index', value);
+
+    let label = document.createElement('label');
+    label.className = 'form-check-label';
+    label.for = id;
+    label.textContent = labelText;
+    label.setAttribute('index', value);
+
+    div.append(input, label);
+    return div;
+}
+

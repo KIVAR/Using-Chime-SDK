@@ -179,10 +179,13 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="row my-3 ml-2" id="screen-2" style="visibility: hidden;">
+    <div class="jumbotron">
+        <div class="row my-3 ml-2" id="screen-2">
             <div class="col-md-4">
                 <div class="card rounded-lg">
+                    <div class="card-header">
+                        <h1 class="display-5">Create a Meeting</h1>
+                    </div>
                     <div class="card-body">
                         <!-- Meeting name -->
                         <div class="form-group row">
@@ -204,8 +207,8 @@
                         <div class="form-group row">
                             <label for="attendee-meeting-name" class="col-sm-3 col-form-label">Meeting Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="attendee-meeting-name" placeholder="Meeting Name"
-                                    autocomplete="on" name="attendee-meeting-name">
+                                <input type="text" class="form-control" id="attendee-meeting-name"
+                                    placeholder="Meeting Name" autocomplete="on" name="attendee-meeting-name">
                             </div>
                         </div>
 
@@ -236,20 +239,83 @@
             <div class="col-md-3">
                 <div class="card rounded-lg">
                     <div class="card-body">
+                        Your machine seem to have these Input/Output devices. Choose the right one.
+                        <!-- Audio & Video devices-->
                         <div class="row">
-                            <div class="col-4">
-                                <div class="text-center">
-                                    <i class="fas fa-microphone-slash mr-1 fa-2x" id="microphone-icon"></i>
+                            <div class="col-md-4">
+                                <div class="card rounded-lg">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <i class="fas fa-microphone-slash mr-1 fa-2x" id="microphone-icon"></i>
+                                        </div>
+                                        <div id="audio-input-devices">
+                                        
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="text-center">
-                                    <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
+                            <div class="col-md-4">
+                                <div class="card rounded-lg">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
+                                        </div>
+                                        <div id="audio-output-devices">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                    Microphone 1
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios2" value="option2">
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                    Microphone 2
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios3" value="option3" disabled>
+                                                <label class="form-check-label" for="exampleRadios3">
+                                                    Microphone 3
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="text-center">
-                                    <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
+                            <div class="col-md-4">
+                                <div class="card rounded-lg">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
+                                        </div>
+                                        <div id="video-input-devices">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                    Microphone 1
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios2" value="option2">
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                    Microphone 2
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios3" value="option3" disabled>
+                                                <label class="form-check-label" for="exampleRadios3">
+                                                    Microphone 3
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
