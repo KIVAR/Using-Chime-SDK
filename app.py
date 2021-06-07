@@ -122,6 +122,9 @@ def add_attendee():
             'meeting_name': attendee_meeting_name,
         }
     )
+  
+    if 'Item' not in response:
+        return f'Meeting {attendee_meeting_name} does not exist!', 503
 
     meeting = response['Item']['meeting']
     meeting_id = response['Item']['meeting_id']
@@ -146,7 +149,6 @@ def add_attendee():
     result['meeting'] = meeting
     result['attendee'] = {'Attendee': response['Attendee']}
 
-    print(result)
     return jsonify(result), 201
 
 

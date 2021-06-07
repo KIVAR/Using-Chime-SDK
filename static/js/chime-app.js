@@ -123,12 +123,9 @@ async function joinMeeting() {
     };
 
     const audioElement = document.getElementById('micro-phone-audio');
-    // meetingSession.audioVideo.bindAudioElement(audioElement);
-
     meetingSession.audioVideo.bindAudioElement(audioElement);
     meetingSession.audioVideo.addObserver(observer2);
     meetingSession.audioVideo.start();
-
 }
 
 async function createSession() {
@@ -166,6 +163,7 @@ async function createSession() {
     // Watch upto 16 video tiles
     videoMultipleAttendeeVideos();
 }
+
 
 /**
  * Add an observer to receive session lifecycle events: connecting, start, and stop.
@@ -370,7 +368,7 @@ function muteUnmuteMicrophone() {
  * ╚════╩════╩════╩════╝                 ╚════╩════╩════╩════╝
  */
 function videoMultipleAttendeeVideos() {
-    const videoElements = [ vt1, vt2, vt3, vt4, vt5, vt6, vt7, vt8, vt9, vt10, vt11, vt12, vt13, vt14, vt15, vt16];
+    const videoElements = [vt1, vt2, vt3, vt4, vt5, vt6, vt7, vt8, vt9, vt10, vt11, vt12, vt13, vt14, vt15, vt16];
 
     // index-tileId pairs
     const indexMap = {};
