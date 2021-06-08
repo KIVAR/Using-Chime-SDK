@@ -221,8 +221,18 @@ async function setupAudioVideoDevices() {
     videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
 
     audioInputDevices.forEach((device, index) => {
-        let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, 'Microphone #' + index);
+        let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, '#' + index);
         document.getElementById('audio-input-devices').appendChild(radio);
+    });
+
+    audioOutputDevices.forEach((device, index) => {
+        let radio = createRadioButton('AudioOutput', 'audio-output-' + index, index, index === 0 ? true : false, '#' + index);
+        document.getElementById('audio-output-devices').appendChild(radio);
+    });
+
+    videoInputDevices.forEach((device, index) => {
+        let radio = createRadioButton('VideoInupt', 'video-input-' + index, index, index === 0 ? true : false, '#' + index);
+        document.getElementById('video-input-devices').appendChild(radio);
     });
 
     // Setup Audio Input Device
