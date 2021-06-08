@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier Prime">
-    <title>Using Cognito</title>
+    <title>AWS Chime In Action</title>
     <style>
         #id-token,
         #decoded-id-token,
@@ -34,6 +34,10 @@
         .card-body {
             background-color: #E8EAED;
         }
+
+        body {
+            background-image: url('cape-otway-lighthouse-1.jpg');
+        }
     </style>
 
 </head>
@@ -41,7 +45,7 @@
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center mt-2">
-            <h5>AWS Chime</h5>
+            <h5></h5>
         </div>
     </div>
     <div class="row my-3 ml-2" id="screen-1">
@@ -179,7 +183,7 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron">
+    <div class="jumbotron" style="display:none">
         <div class="row my-3 ml-2" id="screen-2">
             <div class="col-md-4">
                 <div class="card rounded-lg">
@@ -241,57 +245,57 @@
                     <div class="card-body">
                         Your machine seem to have these Input/Output devices. Choose the right one.
                         <!-- Audio & Video devices-->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card rounded-lg">
-                                    <div class="card-body">
-                                        <div class="text-center">
+                        <div class="card rounded-lg">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="text-left">
                                             <i class="fas fa-microphone-slash mr-1 fa-2x" id="microphone-icon"></i>
                                         </div>
-                                        <div id="audio-input-devices">
-
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card rounded-lg">
-                                    <div class="card-body">
-                                        <div class="text-center">
-                                            <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
-                                        </div>
-                                        <div id="audio-output-devices">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card rounded-lg">
-                                    <div class="card-body">
-                                        <div class="text-center">
-                                            <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
-                                        </div>
-                                        <div id="video-input-devices">
-
-                                        </div>
+                                    <div class="col-md-10">
+                                        <div id="audio-input-devices"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <figure>
-                            <figcaption>Microphone</figcaption>
-                            <audio id="micro-phone-audio">
-                            </audio>
-                        </figure>
-                        <figure>
-                            <figcaption>Listen to the T-Rex:</figcaption>
-                            <video controls width="250" height="200" muted id="local-video-tile">
-                            </video>
-                        </figure>
+                        <div class="card rounded-lg">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="text-left">
+                                            <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div id="audio-output-devices"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card rounded-lg">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="text-left">
+                                            <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="cold-md-10">
+                                        <div id="video-input-devices"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer">
+
+                    <div class="card-body">
+                        <audio id="micro-phone-audio"> </audio>
+                        <video controls muted id="local-video-tile"> </video>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="text-right">
                         <button type="button" class="btn btn-warning" id="join-meeting-btn">Join Meeting
                         </button>
                     </div>
@@ -299,9 +303,10 @@
             </div>
         </div>
     </div>
+    </div>
 
     <!-- Video tiles -->
-    <div class="jumbotron">
+    <div class="jumbotron" style="display:none">
         <div class="row my-3 ml-2">
             <div class="col-md-3">
                 <div class="card-body">

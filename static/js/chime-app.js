@@ -37,6 +37,9 @@ localVideo.addEventListener('click', shareStopLocalVideo);
 audioInputDevicesGroup = document.getElementById('audio-input-devices');
 audioInputDevicesGroup.addEventListener('click', useCurrentlySelectedAudioInputDevice);
 
+audioOutputDevicesGroup = document.getElementById('audio-output-devices');
+audioOutputDevicesGroup.addEventListener('click', useCurrentlySelectedAudioOutputDevice);
+
 var meetingId;
 var attendeeId;
 var joinToken;
@@ -219,43 +222,51 @@ function removeChildren(id) {
     }
 }
 
-
+/**
+ * Initial list of Audio, Video Devices
+ */
 async function setupAudioVideoDevices() {
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
     audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
     videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
 
-
-
+    // Audio Input Devices
+    removeChildren('audio-input-devices');
 
     audioInputDevices.forEach((device, index) => {
-        let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, '#' + index);
+        let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, `${device.label}`);
         document.getElementById('audio-input-devices').appendChild(radio);
     });
 
+    // Audio Output Devices
+    removeChildren('audio-output-devices');
+
     audioOutputDevices.forEach((device, index) => {
-        let radio = createRadioButton('AudioOutput', 'audio-output-' + index, index, index === 0 ? true : false, '#' + index);
+        let radio = createRadioButton('AudioOutput', 'audio-output-' + index, index, index === 0 ? true : false, `${device.label}`);
         document.getElementById('audio-output-devices').appendChild(radio);
     });
 
+    // Video Input Devices
+    removeChildren('video-input-devices');
+
     videoInputDevices.forEach((device, index) => {
-        let radio = createRadioButton('VideoInupt', 'video-input-' + index, index, index === 0 ? true : false, '#' + index);
+        let radio = createRadioButton('VideoInupt', 'video-input-' + index, index, index === 0 ? true : false, `${device.label}`);
         document.getElementById('video-input-devices').appendChild(radio);
     });
 
     // Setup Audio Input Device
-    const audioInputDeviceInfo = audioInputDevices[0];
-    const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
-    await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
+    if (audioInputDevices.length > 0) {
+        const audioInputDeviceInfo = audioInputDevices[0];
+        const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
+        await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
+    }
 
     // Setup Audio Output Device
-    const audioOutputDeviceInfo = audioOutputDevices[0];
-    const firstAudioOutputDevice = audioOutputDeviceInfo.deviceId;
-    await meetingSession.audioVideo.chooseAudioOutputDevice(firstAudioOutputDevice);
-}
-
-function handleAudioInputDeviceSelection() {
-    console.log('Radio button clicked');
+    if (audioOutputDevices.length > 0) {
+        const audioOutputDeviceInfo = audioOutputDevices[0];
+        const firstAudioOutputDevice = audioOutputDeviceInfo.deviceId;
+        await meetingSession.audioVideo.chooseAudioOutputDevice(firstAudioOutputDevice);
+    }
 }
 
 function shareStopLocalVideo() {
@@ -353,7 +364,7 @@ function monitorChangeInDevices() {
                 document.getElementById('audio-input-devices').appendChild(radio);
             });
         },
-        
+
         audioOutputsChanged: freshAudioOutputDeviceList => {
             removeChildren('audio-output-devices');
 
@@ -402,15 +413,29 @@ async function muteUnmuteMicrophone() {
     }
 }
 
-
 async function useCurrentlySelectedAudioInputDevice(e) {
     let index = e.target.getAttribute('index');
+    updateEvents(`Audio Input ${index}`);
     let audioDeviceId = parseInt(index);
-    
+
+    $("input:radio[value=index][name='AudioInput']").prop('checked',true);
+
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
     const audioInputDeviceInfo = audioInputDevices[audioDeviceId];
     const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
     await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
+}
+
+async function useCurrentlySelectedAudioOutputDevice(e) {
+    let index = e.target.getAttribute('index');
+    updateEvents(`Audio Output ${index}`);
+    $("input:radio[value=index][name='AudioOutput']").prop('checked',true);
+    let audioDeviceId = parseInt(index);
+
+    audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
+    const audioOutputDeviceInfo = audioOutputDevices[audioDeviceId];
+    const AudioOutputDevice = audioOutputDeviceInfo.deviceId;
+    await meetingSession.audioVideo.chooseAudioOutputDevice(AudioOutputDevice);
 }
 
 /**
