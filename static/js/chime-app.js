@@ -35,7 +35,7 @@ microPhone.addEventListener('click', muteUnmuteMicrophone);
 localVideo.addEventListener('click', shareStopLocalVideo);
 
 audioInputDevicesGroup = document.getElementById('audio-input-devices');
-audioInputDevicesGroup.addEventListener('click', changeAudioInputDevice);
+audioInputDevicesGroup.addEventListener('click', useCurrentlySelectedAudioInputDevice);
 
 var meetingId;
 var attendeeId;
@@ -213,12 +213,20 @@ function subscribeToAttendeePresenceChanges() {
     meetingSession.audioVideo.realtimeSubscribeToAttendeeIdPresence(callback);
 }
 
+function removeChildren(id) {
+    while (document.getElementById(id).childNodes.length > 0) {
+        document.getElementById(id).childNodes.forEach(node => node.remove());
+    }
+}
 
 
 async function setupAudioVideoDevices() {
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
     audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
     videoInputDevices = await meetingSession.audioVideo.listVideoInputDevices();
+
+
+
 
     audioInputDevices.forEach((device, index) => {
         let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, '#' + index);
@@ -337,14 +345,24 @@ function stopSharingLocalVideo() {
 function monitorChangeInDevices() {
     const observer = {
         audioInputsChanged: freshAudioInputDeviceList => {
+            removeChildren('audio-input-devices');
+
             // An array of MediaDeviceInfo objects
-            freshAudioInputDeviceList.forEach(mediaDeviceInfo => {
-                updateEvents(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+            freshAudioInputDeviceList.forEach((mediaDeviceInfo, index) => {
+                let radio = createRadioButton('AudioInput', 'audio-input-' + index, index, index === 0 ? true : false, `${mediaDeviceInfo.label}`);
+                document.getElementById('audio-input-devices').appendChild(radio);
             });
         },
+        
         audioOutputsChanged: freshAudioOutputDeviceList => {
-            updateEvents('Audio outputs updated: ', freshAudioOutputDeviceList);
+            removeChildren('audio-output-devices');
+
+            freshAudioOutputDeviceList.forEach((mediaDeviceInfo, index) => {
+                let radio = createRadioButton('AudioOutput', 'audio-output-' + index, index, index === 0 ? true : false, `${mediaDeviceInfo.label}`);
+                document.getElementById('audio-output-devices').appendChild(radio);
+            });
         },
+
         videoInputsChanged: freshVideoInputDeviceList => {
             updateEvents('Video inputs updated: ', freshVideoInputDeviceList);
         }
@@ -352,6 +370,7 @@ function monitorChangeInDevices() {
 
     meetingSession.audioVideo.addDeviceChangeObserver(observer);
 }
+
 
 /**
  * Mute/Unmute microphone
@@ -368,7 +387,7 @@ async function muteUnmuteMicrophone() {
         audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
 
         // Setup Audio Input Device
-        const audioInputDeviceInfo = audioInputDevices[audioDeviceId];
+        const audioInputDeviceInfo = audioInputDevices[0];
         const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
         await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
 
@@ -383,12 +402,15 @@ async function muteUnmuteMicrophone() {
     }
 }
 
-function changeAudioInputDevice(e) {
-    let index = e.target.getAttribute('index');
-    audioDeviceId = parseInt(index);
 
-    console.log('Audio Device Id');
-    console.log(audioDeviceId);
+async function useCurrentlySelectedAudioInputDevice(e) {
+    let index = e.target.getAttribute('index');
+    let audioDeviceId = parseInt(index);
+    
+    audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
+    const audioInputDeviceInfo = audioInputDevices[audioDeviceId];
+    const firstAudioInputDevice = audioInputDeviceInfo.deviceId;
+    await meetingSession.audioVideo.chooseAudioInputDevice(firstAudioInputDevice);
 }
 
 /**
