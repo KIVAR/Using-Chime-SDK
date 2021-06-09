@@ -171,7 +171,8 @@ function authenticateUser(e) {
 
                             // Clear the screen
                             document.getElementById('screen-1').remove();
-                            document.getElementById('screen-2').style.visibility = 'visible';
+                            document.getElementById('temp-space').remove();
+                            document.getElementById('screen-2').style.display = 'block';
                         }
                     });
                 }

@@ -1,13 +1,14 @@
 // UI Elements
 let createMeetingBtn = document.getElementById('create-meeting-btn');
 let addAttendeeBtn = document.getElementById('add-attendee-btn');
-let joinMeetingBtn = document.getElementById('join-meeting-btn');
 let eventsList = document.getElementById('events');
 
 let microPhone = document.getElementById('microphone-icon');
 let speaker = document.getElementById('speaker-icon');
 let localVideo = document.getElementById('video-icon');
 const localVideoTile = document.getElementById('local-video-tile');
+
+let meetingAlertsMsg = document.getElementById('meeting-alerts-msg');
 
 const vt1 = document.getElementById('video-tile-1');
 const vt2 = document.getElementById('video-tile-2');
@@ -29,7 +30,6 @@ const vt16 = document.getElementById('video-tile-16');
 // Event Listeners
 createMeetingBtn.addEventListener('click', createMeeting);
 addAttendeeBtn.addEventListener('click', addAttendee);
-joinMeetingBtn.addEventListener('click', joinMeeting);
 
 microPhone.addEventListener('click', muteUnmuteMicrophone);
 localVideo.addEventListener('click', shareStopLocalVideo);
@@ -56,6 +56,8 @@ var localVideoCurrentlyShared = false;
  * Create a Meeting
  */
 function createMeeting() {
+    setMeetingAlertsMsg('', 'normal');
+
     const xhr = new XMLHttpRequest();
     let url = "http://localhost:5000/create-meeting";
 
@@ -63,6 +65,11 @@ function createMeeting() {
     let meetingName = document.getElementById('meeting-name').value.trim();
     payload['meeting_name'] = meetingName;
     console.log(payload);
+
+    if (meetingName.trim().length === 0) {
+        setMeetingAlertsMsg('Enter a valid meeting name', 'failure');
+        return;
+    }
 
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -74,7 +81,7 @@ function createMeeting() {
 
         if (this.status === 201) {
             meetingId = response.Meeting.MeetingId;
-            updateEvents('Meeting created ' + meetingId);
+            setMeetingAlertsMsg('Meeting created ' + meetingId, 'success');
         } else {
             updateEvents(response);
         }
@@ -85,12 +92,19 @@ function createMeeting() {
  * Add an Attendee
  */
 function addAttendee() {
+    setMeetingAlertsMsg('', 'normal');
+
     const xhr = new XMLHttpRequest();
     let url = "http://localhost:5000/add-attendee";
 
     let payload = {};
     let attendeeMeetingName = document.getElementById('attendee-meeting-name').value.trim();
     let attendeeName = document.getElementById('attendee-name').value.trim();
+
+    if (attendeeMeetingName.trim().length === 0 || attendeeName.trim().length === 0) {
+        setMeetingAlertsMsg('Enter Meeting name & Attendee name', 'failure');
+        return;
+    }
 
     payload['attendee_meeting_name'] = attendeeMeetingName;
     payload['attendee_name'] = attendeeName;
@@ -100,8 +114,6 @@ function addAttendee() {
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
-        console.log(this.responseText);
-
         if (this.status === 201) {
             response = JSON.parse(this.responseText);
             meeting = response.meeting;
@@ -109,17 +121,18 @@ function addAttendee() {
 
             attendeeId = attendee.AttendeeId;
             joinToken = attendee.joinToken;
-            updateEvents('Attendee added ' + attendeeId);
+            setMeetingAlertsMsg('Attendee added ', 'success');
+
+            document.getElementById('devices-block').style.display = 'block';
+            joinMeeting();
         } else {
-            updateEvents(this.responseText);
+            setMeetingAlertsMsg(this.responseText, 'failure');
         }
     };
 }
 
 function updateEvents(msg) {
-    let listElement = document.createElement('li');
-    listElement.textContent = msg;
-    eventsList.appendChild(listElement);
+    eventsList.innerText = msg;
 }
 
 async function joinMeeting() {
@@ -418,7 +431,7 @@ async function useCurrentlySelectedAudioInputDevice(e) {
     updateEvents(`Audio Input ${index}`);
     let audioDeviceId = parseInt(index);
 
-    $("input:radio[value=index][name='AudioInput']").prop('checked',true);
+    $("input:radio[value=index][name='AudioInput']").prop('checked', true);
 
     audioInputDevices = await meetingSession.audioVideo.listAudioInputDevices();
     const audioInputDeviceInfo = audioInputDevices[audioDeviceId];
@@ -429,7 +442,7 @@ async function useCurrentlySelectedAudioInputDevice(e) {
 async function useCurrentlySelectedAudioOutputDevice(e) {
     let index = e.target.getAttribute('index');
     updateEvents(`Audio Output ${index}`);
-    $("input:radio[value=index][name='AudioOutput']").prop('checked',true);
+    $("input:radio[value=index][name='AudioOutput']").prop('checked', true);
     let audioDeviceId = parseInt(index);
 
     audioOutputDevices = await meetingSession.audioVideo.listAudioOutputDevices();
@@ -533,3 +546,20 @@ function createRadioButton(group, id, value, checked, labelText) {
     return div;
 }
 
+function setMeetingAlertsMsg(msg, type) {
+    meetingAlertsMsg.innerText = msg;
+
+    switch (type) {
+        case 'success':
+            meetingAlertsMsg.className = 'alert alert-success';
+            break;
+
+        case 'normal':
+            meetingAlertsMsg.className = '';
+            break;
+
+        case 'failure':
+            meetingAlertsMsg.className = 'alert alert-danger';
+            break;
+    }
+}

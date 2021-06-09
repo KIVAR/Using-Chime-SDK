@@ -36,7 +36,9 @@
         }
 
         body {
-            background-image: url('cape-otway-lighthouse-1.jpg');
+            background-image: url('/static/cape-otway-lighthouse-1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
         }
     </style>
 
@@ -45,15 +47,22 @@
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center mt-2">
-            <h5></h5>
+            <h5>Chime SDK Demo</h5>
         </div>
     </div>
-    <div class="row my-3 ml-2" id="screen-1">
-        <div class="col-md-7">
+
+    <div class="row my-5" style="height: 100px;" id="temp-space"> </div>
+
+    <!-- Signup / SignIn section -->
+    <div class="row ml-2" id="screen-1">
+        <div class="col-md-8">
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card mt-2">
+                <div class="card-header">
+                    To test the Chime SDK, you need to signup using an email first, then sign in.
+                </div>
                 <div class="card-body">
                     <div>
                         <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -183,12 +192,13 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron" style="display:none">
-        <div class="row my-3 ml-2" id="screen-2">
+
+    <div id="screen-2" style="display: none;">
+        <div class="row my-3 ml-2">
             <div class="col-md-4">
                 <div class="card rounded-lg">
                     <div class="card-header">
-                        <h1 class="display-5">Create a Meeting</h1>
+                        <h3>Create a Meeting</h3>
                     </div>
                     <div class="card-body">
                         <!-- Meeting name -->
@@ -225,22 +235,27 @@
                         </div>
 
                         <div class="text-right">
-                            <button type="button" class="btn btn-warning" id="add-attendee-btn">Add Attendee
+                            <button type="button" class="btn btn-warning" id="add-attendee-btn">Join Meeting
                             </button>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <div id="meeting-alerts-msg">
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card rounded-lg">
+
+                <div class="card rounded-lg my-3">
                     <div class="card-header">Events</div>
                     <div class="card-body">
-                        <ul id="events">
-                        </ul>
+                        <div id="events"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+
+            <!-- Devices-->
+            <div class="col-md-3" id="devices-block" style="display: none;">
                 <div class="card rounded-lg">
                     <div class="card-body">
                         Your machine seem to have these Input/Output devices. Choose the right one.
@@ -291,18 +306,14 @@
 
                     <div class="card-body">
                         <audio id="micro-phone-audio"> </audio>
-                        <video controls muted id="local-video-tile"> </video>
+                        <video controls muted id="local-video-tile" height="250" width="400"> </video>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="text-right">
-                        <button type="button" class="btn btn-warning" id="join-meeting-btn">Join Meeting
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Video tiles -->
