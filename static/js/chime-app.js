@@ -59,7 +59,7 @@ function createMeeting() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "http://localhost:5000/create-meeting";
+    let url = "https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/create-meeting";
 
     let payload = {};
     let meetingName = document.getElementById('meeting-name').value.trim();
@@ -79,7 +79,7 @@ function createMeeting() {
         response = JSON.parse(this.responseText);
         meeting = response;
 
-        if (this.status === 201) {
+        if (this.status === 200) {
             meetingId = response.Meeting.MeetingId;
             setMeetingAlertsMsg('Meeting created ' + meetingId, 'success');
         } else {
@@ -95,7 +95,7 @@ function addAttendee() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "http://localhost:5000/add-attendee";
+    let url = "https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/add-attendee";
 
     let payload = {};
     let attendeeMeetingName = document.getElementById('attendee-meeting-name').value.trim();
@@ -114,7 +114,7 @@ function addAttendee() {
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
-        if (this.status === 201) {
+        if (this.status === 200) {
             response = JSON.parse(this.responseText);
             meeting = response.meeting;
             attendee = response.attendee.Attendee;

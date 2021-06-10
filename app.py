@@ -4,6 +4,7 @@ from logging.handlers import RotatingFileHandler
 import logging
 import uuid
 from flask import request, jsonify, render_template
+import json
 
 # AWS CLI profile name
 from flask_cors import cross_origin
@@ -100,7 +101,7 @@ def create_meeting():
     table = ddb.Table("chime-meetings")
     table.put_item(Item=item)
 
-    return jsonify(meeting), 201
+    return json.dumps(meeting), 201
 
 
 @app.route('/add-attendee', methods=['POST', 'OPTIONS'])

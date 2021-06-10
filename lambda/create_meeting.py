@@ -1,7 +1,6 @@
 import boto3
+import json
 import uuid
-from flask import request, jsonify
-
 
 def lambda_handler(event, context):
     """
@@ -12,7 +11,8 @@ def lambda_handler(event, context):
     chime = session.client('chime')
     ddb = boto3.resource('dynamodb')
 
-    payload = request.json
+    payload = json.loads(event['body'])
+    print(payload)
     meeting_name = payload['meeting_name']
     client_request_token = str(uuid.uuid4())
 
@@ -26,14 +26,10 @@ def lambda_handler(event, context):
                     'Key': 'Name',
                     'Value': 'Chime meeting'
                 },
-            ],
-            NotificationsConfiguration={
-                'SnsTopicArn': 'arn:aws:sns:us-east-2:567463201961:chime-events-topic',
-                'SqsQueueArn': 'arn:aws:sqs:us-east-2:567463201961:chime-events-queue'
-            }
+            ]
         )
     except Exception as err:
-        return jsonify(str(err)), 503
+        return json.dumps(str(err)), 503
 
     meeting = {'Meeting': response['Meeting']}
 
@@ -46,4 +42,12 @@ def lambda_handler(event, context):
     table = ddb.Table("chime-meetings")
     table.put_item(Item=item)
 
-    return jsonify(meeting), 201
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST'
+        },
+        'body': json.dumps(meeting)
+    }
