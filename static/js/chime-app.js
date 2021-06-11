@@ -1,6 +1,9 @@
 // UI Elements
 let createMeetingBtn = document.getElementById('create-meeting-btn');
 let addAttendeeBtn = document.getElementById('add-attendee-btn');
+let leaveMeetingBtn = document.getElementById('leave-meeting-btn');
+let showVideoTilesBtn = document.getElementById('show-video-tiles-btn');
+
 let eventsList = document.getElementById('events');
 
 let microPhone = document.getElementById('microphone-icon');
@@ -30,6 +33,8 @@ const vt16 = document.getElementById('video-tile-16');
 // Event Listeners
 createMeetingBtn.addEventListener('click', createMeeting);
 addAttendeeBtn.addEventListener('click', addAttendee);
+leaveMeetingBtn.addEventListener('click', leaveSession);
+showVideoTilesBtn.addEventListener('click', showVideoTiles);
 
 microPhone.addEventListener('click', muteUnmuteMicrophone);
 localVideo.addEventListener('click', shareStopLocalVideo);
@@ -48,6 +53,7 @@ var attendee = {};
 var meetingSession;
 
 var audioDeviceId = 0;
+var showVideoTilesFlag = false;
 
 var audioInputDevices, audioOutputDevices, videoInputDevices;
 var localVideoCurrentlyShared = false;
@@ -84,9 +90,13 @@ function createMeeting() {
             meetingId = response.Meeting.MeetingId;
             setMeetingAlertsMsg('Meeting created ' + meetingId, 'success');
         } else {
-            updateEvents(response);
+            setMeetingAlertsMsg(response);
         }
     };
+
+    xhr.onerror = function() {
+        setMeetingAlertsMsg(`Network Error`);
+      };
 }
 
 /**
@@ -125,12 +135,19 @@ function addAttendee() {
             joinToken = attendee.joinToken;
             setMeetingAlertsMsg('Attendee added ', 'success');
 
-            document.getElementById('devices-block').style.display = 'block';
+            document.getElementById('audio-input-devices-block').style.display = 'block';
+            document.getElementById('audio-output-devices-block').style.display = 'block';
+            document.getElementById('video-input-devices-block').style.display = 'block';
+            document.getElementById('events-block').style.display = 'inline-block';
             joinMeeting();
         } else {
             setMeetingAlertsMsg(this.responseText, 'failure');
         }
     };
+
+    xhr.onerror = function() {
+        setMeetingAlertsMsg(`Network Error`);
+      };
 }
 
 function updateEvents(msg) {
@@ -186,6 +203,10 @@ async function createSession() {
 
     // Watch upto 16 video tiles
     videoMultipleAttendeeVideos();
+
+    // Usecase #28
+    // If Meeting is stooped for any reason.
+    setupMeetingStoppedObserver();
 }
 
 
@@ -290,11 +311,13 @@ function shareStopLocalVideo() {
         localVideoCurrentlyShared = false;
         localVideo.className = 'fas fa-video-slash mr-1 fa-2x';
         stopSharingLocalVideo();
+        document.getElementById('self-video-area').style.display = 'none';
     } else {
         // oterhwise, start the video.
         localVideoCurrentlyShared = true;
         localVideo.className = 'fas fa-video mr-1 fa-2x';
         shareLocalVideo();
+        document.getElementById('self-video-area').style.display = 'block';
     }
 }
 
@@ -525,6 +548,15 @@ function videoMultipleAttendeeVideos() {
     meetingSession.audioVideo.addObserver(observer);
 }
 
+/**
+ * Creates Radio Buttons for Audio Input/Output and Video Input Devices.
+ * @param {*} group 
+ * @param {*} id 
+ * @param {*} value 
+ * @param {*} checked 
+ * @param {*} labelText 
+ * @returns 
+ */
 function createRadioButton(group, id, value, checked, labelText) {
     let div = document.createElement('div');
     div.className = 'form-check';
@@ -548,6 +580,11 @@ function createRadioButton(group, id, value, checked, labelText) {
     return div;
 }
 
+/**
+ * Writes a message
+ * @param {*} msg 
+ * @param {*} type 
+ */
 function setMeetingAlertsMsg(msg, type) {
     meetingAlertsMsg.innerText = msg;
 
@@ -563,5 +600,88 @@ function setMeetingAlertsMsg(msg, type) {
         case 'failure':
             meetingAlertsMsg.className = 'alert alert-danger';
             break;
+    }
+}
+
+/**
+ * This method sets up an observer that is called whenever the meeting is stopped. 
+ *      - You (or someone else) have called the DeleteMeeting API action in your server application.
+ *      - You attempted to join a deleted meeting.
+ *      - No audio connections are present in the meeting for more than five minutes.
+ *      - Fewer than two audio connections are present in the meeting for more than 30 minutes.
+ *      - Screen share viewer connections are inactive for more than 30 minutes.
+ *      - The meeting time exceeds 24 hours.
+ */
+function setupMeetingStoppedObserver() {
+    const observer = {
+        audioVideoDidStop: sessionStatus => {
+            const sessionStatusCode = sessionStatus.statusCode();
+            if (sessionStatusCode === MeetingSessionStatusCode.MeetingEnded) {
+                updateEvents('The session has ended');
+            } else {
+                updateEvents('Stopped with a session status code: ', sessionStatusCode);
+            }
+        }
+    };
+
+    meetingSession.audioVideo.addObserver(observer);
+}
+
+function leaveSession() {
+    const observer = {
+        audioVideoDidStop: sessionStatus => {
+            const sessionStatusCode = sessionStatus.statusCode();
+            if (sessionStatusCode === MeetingSessionStatusCode.Left) {
+                /*
+                  - You called meetingSession.audioVideo.stop().
+                  - When closing a browser window or page, Chime SDK attempts to leave the session.
+                */
+                updateEvents('You left the session');
+            } else {
+                updateEvents('Stopped with a session status code: ', sessionStatusCode);
+            }
+        }
+    };
+
+    if (meetingSession !== null && meetingSession !== undefined) {
+        meetingSession.audioVideo.addObserver(observer);
+        meetingSession.audioVideo.stop();
+    }
+}
+
+function generateAlerts() {
+    const observer = {
+        connectionDidBecomePoor: () => {
+          updateEvents('Your connection is poor');
+        },
+        connectionDidSuggestStopVideo: () => {
+            updateEvents('Recommend turning off your video');
+        },
+        videoSendDidBecomeUnavailable: () => {
+          // Chime SDK allows a total of 16 simultaneous videos per meeting.
+          // If you try to share more video, this method will be called.
+          // See videoAvailabilityDidChange below to find out when it becomes available.
+          updateEvents('You cannot share your video');
+        },
+        videoAvailabilityDidChange: videoAvailability => {
+          // canStartLocalVideo will also be true if you are already sharing your video.
+          if (videoAvailability.canStartLocalVideo) {
+            updateEvents('You can share your video');
+          } else {
+            updateEvents('You cannot share your video');
+          }
+        }
+      };
+      
+      meetingSession.audioVideo.addObserver(observer);
+}
+
+function showVideoTiles() {
+    showVideoTilesFlag = !showVideoTilesFlag;
+
+    if (showVideoTilesFlag) {
+        document.getElementById('video-tiles-16').style.display = 'block';
+    } else {
+        document.getElementById('video-tiles-16').style.display = 'none';
     }
 }
