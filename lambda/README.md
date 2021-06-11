@@ -56,12 +56,12 @@ Here, we are passing data for the `POST` method using `-d` option.
 
 ```sh
 curl -s -X POST \
-	'https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/create-meeting' \
+	'https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/create-meeting' \
 	-H 'content-type: application/json' \
 	-d '{ "meeting_name": "Morning" }'
 
 curl -s -X POST \
-	'https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/add-attendee' \
+	'https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/add-attendee' \
 	-H 'content-type: application/json' \
 	-d '{ "attendee_meeting_name": "Morning", "attendee_name": "RK"}'
 ```

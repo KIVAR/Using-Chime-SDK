@@ -2215,3 +2215,54 @@ b'{"Attendee":{"AttendeeId":"a1b90ac8-2291-2478-8ff3-6d9a967f4117","ExternalUser
 2021-06-10 22:53:40,833 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
 2021-06-10 22:53:41,133 WARNING: [_internal.py:113] :  * Debugger is active!
 2021-06-10 22:53:41,141 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-11 19:33:23,413 INFO: [_internal.py:113] :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2021-06-11 19:33:23,429 INFO: [_internal.py:113] :  * Restarting with fsevents reloader
+2021-06-11 19:33:23,713 WARNING: [_internal.py:113] :  * Debugger is active!
+2021-06-11 19:33:23,723 INFO: [_internal.py:113] :  * Debugger PIN: 108-068-074
+2021-06-11 19:33:33,898 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[37mGET / HTTP/1.1[0m" 200 -
+2021-06-11 19:33:33,918 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/aws-sdk-2.763.0.min.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,923 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/amazon-cognito-identity.min.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,924 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/aws-cognito-sdk.min.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,924 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/amazon-chime-sdk.min.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,925 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/jwt-decode.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,925 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2021-06-11 19:33:33,930 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:33] "[37mGET /static/js/chime-app.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:34,962 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:34] "[36mGET /static/cape-otway-lighthouse-1.jpg HTTP/1.1[0m" 304 -
+2021-06-11 19:33:35,153 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2021-06-11 19:33:37,590 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:37] "[33mGET /static/js/aws-cognito-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:37,592 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:37] "[33mGET /static/js/amazon-cognito-identity.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:37,596 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:37] "[33mGET /static/js/amazon-chime-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:37,598 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:37] "[33mGET /static/js/jwt-decode.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:41,582 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET / HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,603 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/aws-sdk-2.763.0.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,604 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/aws-cognito-sdk.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,605 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/amazon-cognito-identity.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,607 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/amazon-chime-sdk.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,610 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/app.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,612 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/jwt-decode.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,616 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/js/chime-app.js HTTP/1.1[0m" 200 -
+2021-06-11 19:33:41,742 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:41] "[37mGET /static/cape-otway-lighthouse-1.jpg HTTP/1.1[0m" 200 -
+2021-06-11 19:33:42,490 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:42] "[33mGET /static/js/aws-cognito-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:42,503 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:42] "[33mGET /static/js/amazon-chime-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:42,504 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:42] "[33mGET /static/js/amazon-cognito-identity.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:42,516 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:42] "[33mGET /static/js/jwt-decode.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:33:42,518 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:33:42] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2021-06-11 19:45:16,456 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:16] "[37mGET / HTTP/1.1[0m" 200 -
+2021-06-11 19:45:19,443 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:19] "[33mGET /static/js/aws-cognito-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:19,445 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:19] "[33mGET /static/js/amazon-cognito-identity.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:19,447 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:19] "[33mGET /static/js/amazon-chime-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:19,448 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:19] "[33mGET /static/js/jwt-decode.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:23,194 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET / HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,215 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/aws-sdk-2.763.0.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,218 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/aws-cognito-sdk.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,221 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/amazon-cognito-identity.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,226 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/amazon-chime-sdk.min.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,231 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/jwt-decode.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,234 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/app.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,235 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/js/chime-app.js HTTP/1.1[0m" 200 -
+2021-06-11 19:45:23,542 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:23] "[37mGET /static/cape-otway-lighthouse-1.jpg HTTP/1.1[0m" 200 -
+2021-06-11 19:45:24,134 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:24] "[33mGET /static/js/aws-cognito-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:24,135 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:24] "[33mGET /static/js/amazon-cognito-identity.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:24,137 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:24] "[33mGET /static/js/amazon-chime-sdk.min.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:24,138 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:24] "[33mGET /static/js/jwt-decode.js.map HTTP/1.1[0m" 404 -
+2021-06-11 19:45:24,139 INFO: [_internal.py:113] : 127.0.0.1 - - [11/Jun/2021 19:45:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

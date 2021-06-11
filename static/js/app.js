@@ -5,6 +5,7 @@ var appId;
 var poolData;
 var userPool;
 var cognitoUser = '';
+var idToken = '';
 
 // On Page loading, execute this
 window.addEventListener('DOMContentLoaded', saveConfigData);
@@ -154,6 +155,7 @@ function authenticateUser(e) {
                             logins = {};
                             let key = 'cognito-idp.' + region + '.amazonaws.com/' + userPoolId;
                             logins[key] = result.getIdToken().getJwtToken();
+                            idToken = result.getIdToken().getJwtToken();
 
                             // Add the User's Id Token to the Cognito credentials login map.
                             AWS.config.credentials = new AWS.CognitoIdentityCredentials({

@@ -59,7 +59,7 @@ function createMeeting() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/create-meeting";
+    let url = "https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/create-meeting";
 
     let payload = {};
     let meetingName = document.getElementById('meeting-name').value.trim();
@@ -73,6 +73,7 @@ function createMeeting() {
 
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', idToken);
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
@@ -95,7 +96,7 @@ function addAttendee() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "https://my4zv3l8dk.execute-api.us-east-2.amazonaws.com/prod/add-attendee";
+    let url = "https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/add-attendee";
 
     let payload = {};
     let attendeeMeetingName = document.getElementById('attendee-meeting-name').value.trim();
@@ -111,6 +112,7 @@ function addAttendee() {
 
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', idToken);
     xhr.send(JSON.stringify(payload));
 
     xhr.onload = function () {
