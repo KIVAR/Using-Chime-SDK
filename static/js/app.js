@@ -113,9 +113,6 @@ function authenticateUser(e) {
     let email = document.getElementById('signin-email').value;
     let password = document.getElementById('signin-password').value;
 
-    email = 'ryandam.9@gmail.com';
-    password = 'Puppy123$';
-
     if (email.length === 0 || password === 0 || userPool === null || userPool === undefined) {
         signinMessage.innerText = 'Fill in all fields!';
         signinMessage.style.display = 'block';

@@ -1,17 +1,36 @@
 // UI Elements
+
+var inputMeetingName = document.getElementById('meeting-name');
+var inputAttendeeMeetingName = document.getElementById('attendee-meeting-name');
+var inputAttendeeName = document.getElementById('attendee-name');
+
+// Buttons
 let createMeetingBtn = document.getElementById('create-meeting-btn');
 let addAttendeeBtn = document.getElementById('add-attendee-btn');
 let leaveMeetingBtn = document.getElementById('leave-meeting-btn');
 let showVideoTilesBtn = document.getElementById('show-video-tiles-btn');
 
+// Status messages
 let eventsList = document.getElementById('events');
+let meetingAlertsMsg = document.getElementById('meeting-alerts-msg');
 
 let microPhone = document.getElementById('microphone-icon');
 let speaker = document.getElementById('speaker-icon');
 let localVideo = document.getElementById('video-icon');
 const localVideoTile = document.getElementById('local-video-tile');
 
-let meetingAlertsMsg = document.getElementById('meeting-alerts-msg');
+// These are group of radio buttons.
+const audioInputDevicesGroup = document.getElementById('audio-input-devices');
+const audioOutputDevicesGroup = document.getElementById('audio-output-devices');
+const videoInputDevicesGroup = document.getElementById('video-input-devices');
+
+// Tiles
+const audioInputDevicesTile = document.getElementById('audio-input-devices-block');
+const audioOutputDevicesTile = document.getElementById('audio-output-devices-block');
+const videoInputDevicesTile = document.getElementById('video-input-devices-block');
+const eventsTile = document.getElementById('events-block');
+const selfVideoTile = document.getElementById('self-video-area');
+const allVideosTile = document.getElementById('video-tiles-16');
 
 const vt1 = document.getElementById('video-tile-1');
 const vt2 = document.getElementById('video-tile-2');
@@ -35,15 +54,14 @@ createMeetingBtn.addEventListener('click', createMeeting);
 addAttendeeBtn.addEventListener('click', addAttendee);
 leaveMeetingBtn.addEventListener('click', leaveSession);
 showVideoTilesBtn.addEventListener('click', showVideoTiles);
-
 microPhone.addEventListener('click', muteUnmuteMicrophone);
 localVideo.addEventListener('click', shareStopLocalVideo);
-
-audioInputDevicesGroup = document.getElementById('audio-input-devices');
 audioInputDevicesGroup.addEventListener('click', useCurrentlySelectedAudioInputDevice);
-
-audioOutputDevicesGroup = document.getElementById('audio-output-devices');
 audioOutputDevicesGroup.addEventListener('click', useCurrentlySelectedAudioOutputDevice);
+
+// APIs
+const createMeetingApi = 'https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/create-meeting';
+const addAttendeeApi = 'https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/add-attendee';
 
 var meetingId;
 var attendeeId;
@@ -65,12 +83,11 @@ function createMeeting() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/create-meeting";
+    let url = createMeetingApi;
 
     let payload = {};
-    let meetingName = document.getElementById('meeting-name').value.trim();
+    let meetingName = inputMeetingName.value.trim();
     payload['meeting_name'] = meetingName;
-    console.log(payload);
 
     if (meetingName.trim().length === 0) {
         setMeetingAlertsMsg('Enter a valid meeting name', 'failure');
@@ -94,9 +111,9 @@ function createMeeting() {
         }
     };
 
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         setMeetingAlertsMsg(`Network Error`);
-      };
+    };
 }
 
 /**
@@ -106,11 +123,11 @@ function addAttendee() {
     setMeetingAlertsMsg('', 'normal');
 
     const xhr = new XMLHttpRequest();
-    let url = "https://xectwc6i27.execute-api.us-east-2.amazonaws.com/prod/add-attendee";
+    let url = addAttendeeApi;
 
     let payload = {};
-    let attendeeMeetingName = document.getElementById('attendee-meeting-name').value.trim();
-    let attendeeName = document.getElementById('attendee-name').value.trim();
+    let attendeeMeetingName = inputAttendeeMeetingName.value.trim();
+    let attendeeName = inputAttendeeName.value.trim();
 
     if (attendeeMeetingName.trim().length === 0 || attendeeName.trim().length === 0) {
         setMeetingAlertsMsg('Enter Meeting name & Attendee name', 'failure');
@@ -135,19 +152,19 @@ function addAttendee() {
             joinToken = attendee.joinToken;
             setMeetingAlertsMsg('Attendee added ', 'success');
 
-            document.getElementById('audio-input-devices-block').style.display = 'block';
-            document.getElementById('audio-output-devices-block').style.display = 'block';
-            document.getElementById('video-input-devices-block').style.display = 'block';
-            document.getElementById('events-block').style.display = 'inline-block';
+            audioInputDevicesTile.style.display = 'block';
+            audioOutputDevicesTile.style.display = 'block';
+            videoInputDevicesTile.style.display = 'block';
+            eventsTile.style.display = 'inline-block';
             joinMeeting();
         } else {
             setMeetingAlertsMsg(this.responseText, 'failure');
         }
     };
 
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         setMeetingAlertsMsg(`Network Error`);
-      };
+    };
 }
 
 function updateEvents(msg) {
@@ -207,6 +224,9 @@ async function createSession() {
     // Usecase #28
     // If Meeting is stooped for any reason.
     setupMeetingStoppedObserver();
+
+    // Meeting Readiness Checker
+    // meetingReadinessChecker(logger);
 }
 
 
@@ -240,8 +260,10 @@ function observeSessionLifeCycleChanges() {
  */
 function subscribeToAttendeePresenceChanges() {
     const attendeePresenceSet = new Set();
+
     const callback = (presentAttendeeId, present) => {
         updateEvents(`Attendee ID: ${presentAttendeeId} Present: ${present}`);
+
         if (present) {
             attendeePresenceSet.add(presentAttendeeId);
         } else {
@@ -311,13 +333,13 @@ function shareStopLocalVideo() {
         localVideoCurrentlyShared = false;
         localVideo.className = 'fas fa-video-slash mr-1 fa-2x';
         stopSharingLocalVideo();
-        document.getElementById('self-video-area').style.display = 'none';
+        selfVideoTile.style.visibility = 'hidden';
     } else {
         // oterhwise, start the video.
         localVideoCurrentlyShared = true;
         localVideo.className = 'fas fa-video mr-1 fa-2x';
         shareLocalVideo();
-        document.getElementById('self-video-area').style.display = 'block';
+        selfVideoTile.style.visibility = 'visible';
     }
 }
 
@@ -453,7 +475,7 @@ async function muteUnmuteMicrophone() {
 
 async function useCurrentlySelectedAudioInputDevice(e) {
     let index = e.target.getAttribute('index');
-    updateEvents(`Audio Input ${index}`);
+    updateEvents(`You have selected Audio Input ${index}`);
     let audioDeviceId = parseInt(index);
 
     $("input:radio[value=index][name='AudioInput']").prop('checked', true);
@@ -466,7 +488,7 @@ async function useCurrentlySelectedAudioInputDevice(e) {
 
 async function useCurrentlySelectedAudioOutputDevice(e) {
     let index = e.target.getAttribute('index');
-    updateEvents(`Audio Output ${index}`);
+    updateEvents(`You have selected Audio Output ${index}`);
     $("input:radio[value=index][name='AudioOutput']").prop('checked', true);
     let audioDeviceId = parseInt(index);
 
@@ -616,7 +638,7 @@ function setupMeetingStoppedObserver() {
     const observer = {
         audioVideoDidStop: sessionStatus => {
             const sessionStatusCode = sessionStatus.statusCode();
-            if (sessionStatusCode === MeetingSessionStatusCode.MeetingEnded) {
+            if (sessionStatusCode === 6) {
                 updateEvents('The session has ended');
             } else {
                 updateEvents('Stopped with a session status code: ', sessionStatusCode);
@@ -631,7 +653,7 @@ function leaveSession() {
     const observer = {
         audioVideoDidStop: sessionStatus => {
             const sessionStatusCode = sessionStatus.statusCode();
-            if (sessionStatusCode === MeetingSessionStatusCode.Left) {
+            if (sessionStatusCode === 1) {
                 /*
                   - You called meetingSession.audioVideo.stop().
                   - When closing a browser window or page, Chime SDK attempts to leave the session.
@@ -646,42 +668,117 @@ function leaveSession() {
     if (meetingSession !== null && meetingSession !== undefined) {
         meetingSession.audioVideo.addObserver(observer);
         meetingSession.audioVideo.stop();
+
+        // Hide all the device tiles
+        audioInputDevicesTile.style.display = 'none';
+        audioOutputDevicesTile.style.display = 'none';
+        videoInputDevicesTile.style.display = 'none';
+        eventsTile.style.display = 'none';
+        selfVideoTile.style.visibility = 'hidden';
+        allVideosTile.style.display = 'none';
+        setMeetingAlertsMsg('', 'normal');
+
+        inputMeetingName.value = '';
+        inputAttendeeMeetingName.value = '';
+        inputAttendeeName.value = '';
     }
 }
 
 function generateAlerts() {
     const observer = {
         connectionDidBecomePoor: () => {
-          updateEvents('Your connection is poor');
+            updateEvents('Your connection is poor');
         },
         connectionDidSuggestStopVideo: () => {
             updateEvents('Recommend turning off your video');
         },
         videoSendDidBecomeUnavailable: () => {
-          // Chime SDK allows a total of 16 simultaneous videos per meeting.
-          // If you try to share more video, this method will be called.
-          // See videoAvailabilityDidChange below to find out when it becomes available.
-          updateEvents('You cannot share your video');
+            // Chime SDK allows a total of 16 simultaneous videos per meeting.
+            // If you try to share more video, this method will be called.
+            // See videoAvailabilityDidChange below to find out when it becomes available.
+            updateEvents('You cannot share your video');
         },
         videoAvailabilityDidChange: videoAvailability => {
-          // canStartLocalVideo will also be true if you are already sharing your video.
-          if (videoAvailability.canStartLocalVideo) {
-            updateEvents('You can share your video');
-          } else {
-            updateEvents('You cannot share your video');
-          }
+            // canStartLocalVideo will also be true if you are already sharing your video.
+            if (videoAvailability.canStartLocalVideo) {
+                updateEvents('You can share your video');
+            } else {
+                updateEvents('You cannot share your video');
+            }
         }
-      };
-      
-      meetingSession.audioVideo.addObserver(observer);
+    };
+
+    meetingSession.audioVideo.addObserver(observer);
 }
 
 function showVideoTiles() {
     showVideoTilesFlag = !showVideoTilesFlag;
 
-    if (showVideoTilesFlag) {
+    if (showVideoTilesFlag && meetingSession !== null && meetingSession !== undefined) {
         document.getElementById('video-tiles-16').style.display = 'block';
     } else {
         document.getElementById('video-tiles-16').style.display = 'none';
+    }
+}
+
+async function meetingReadinessChecker(logger) {
+    try {
+        const meetingReadinessChecker = new DefaultMeetingReadinessChecker(logger, meetingSession);
+    
+        // Usecase #30
+        // Perform local checks
+        let devices = await meetingSession.audioVideo.listAudioInputDevices();
+        alert(devices.length);
+        
+        for(let i = 0; i < devices.length; i++) {
+            alert('Hello');
+            let audioInputDeviceInfo = audioInputDevices[i];
+            let audioInputFeedback = await meetingReadinessChecker.checkAudioInput(audioInputDeviceInfo.deviceId);
+    
+            let result = '';
+        
+            switch (audioInputFeedback) {
+                case CheckAudioInputFeedback.Succeeded:
+                    result = 'Audio Feedback: Succeeded'; 
+                    break;
+                case CheckAudioInputFeedback.Failed:
+                    result = 'Audio Feedback: Failed'; 
+                    break;
+                case CheckAudioInputFeedback.PermissionDenied:
+                    result = 'Audio Feedback: Permission Denied'; 
+                    break;
+            }
+    
+            const audioFeedback = await meetingReadinessChecker.checkAudioConnectivity(audioDeviceInfo.deviceId);
+            result = result + ` Feedback result: ${CheckAudioConnectivityFeedback[audioFeedback]}`;
+    
+            let li = document.createElement('li');
+            li.textContent = result;
+            document.getElementById('checker-list').append(li);
+        }
+    
+        // Usecase #31
+        // Use the meeting readiness checker to perform end-to-end checks, e.g. audio, video, and content share.
+        // Test video connection
+        // const videoInputInfo = /* An array item from meetingSession.audioVideo.listVideoInputDevices */;
+        // const videoFeedback = await meetingReadinessChecker.checkVideoConnectivity(videoInputInfo.deviceId);
+        // console.log(`Feedback result: ${CheckVideoConnectivityFeedback[videoFeedback]}`);
+    
+        // // Tests content share connectivity
+        // const contentShareFeedback = await meetingReadinessChecker.checkContentShareConnectivity();
+        // console.log(`Feedback result: ${CheckContentShareConnectivityFeedback[contentShareFeedback]}`);
+    
+        // // Usecase #32
+        // // Use the meeting readiness checker to perform network checks, e.g. TCP and UDP.
+        // // Tests for UDP network connectivity
+        // const networkUDPFeedback = await meetingReadinessChecker.checkNetworkUDPConnectivity();
+        // console.log(`Feedback result: ${CheckNetworkUDPConnectivityFeedback[networkUDPFeedback]}`);
+    
+        // // Tests for TCP network connectivity
+        // const networkTCPFeedback = await meetingReadinessChecker.checkNetworkTCPConnectivity();
+        // console.log(`Feedback result: ${CheckNetworkTCPConnectivityFeedback[networkTCPFeedback]}`); 
+    } 
+    catch (err) {
+        alert(err);
     }
 }

@@ -36,29 +36,29 @@
         }
 
         body {
-            background-image: url('/static/cape-otway-lighthouse-1.jpg');
+            background-image: url('../static/cape-otway-lighthouse-1.jpg');
             background-repeat: no-repeat;
             background-size: cover;
+        }
+
+        .scroll {
+            overflow-y: auto;
+            max-height: 70vh;
+            height: 93vh;
         }
     </style>
 
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row justify-content-center mt-2">
-            <h5>Chime SDK Demo</h5>
-        </div>
-    </div>
-
-    <div class="row my-5" style="height: 100px;" id="temp-space"> </div>
+    <div class="row my-5" style="height: 10px;" id="temp-space"> </div>
 
     <!-- Signup / SignIn section -->
     <div class="row ml-2" id="screen-1">
         <div class="col-md-8">
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-12">
             <div class="card mt-2">
                 <div class="card-header">
                     To test the Chime SDK, you need to signup using an email first, then sign in.
@@ -193,7 +193,66 @@
         </div>
     </div>
 
-    <div id="screen-2" style="display: none;">
+    <div id="screen-2" class="mt-5"  style="display: none;">
+        <div class="row ml-1">
+            <div class="col-md-3">
+                <audio id="micro-phone-audio"> </audio>
+                <div class="card" id="audio-input-devices-block" style="display: none;">
+                    <div class="card-body"> </video>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="text-left">
+                                    <i class="fas fa-microphone-slash mr-1 fa-2x" id="microphone-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div id="audio-input-devices"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" id="audio-output-devices-block" style="display: none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="text-left">
+                                    <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div id="audio-output-devices"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" id="video-input-devices-block" style="display: none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="text-left">
+                                    <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
+                                </div>
+                            </div>
+                            <div class="cold-md-10">
+                                <div id="video-input-devices"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="events-block" style="display: none;">
+                <div>
+                    <div class="card">
+                        <div class="alert alert-danger ml-2 mt-2 mr-2 mb-2" role="alert" id="events"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row my-3 ml-1 mr-1">
             <div class="col-md-3">
                 <div class="card rounded-lg">
@@ -248,121 +307,94 @@
                 </div>
             </div>
 
-            <div class="col-md-3" id="self-video-area" style="display: none;">
+            <div class="col-md-3" id="self-video-area" style="visibility: hidden;">
                 <div class="card">
                     <div class="card-body">
                         <video controls muted id="local-video-tile" class="m-2" height="250" width="400"> </video>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div style="height: 400px;" id="video-tiles-16" style="display: none;">
-                    <!-- Video tiles -->
-                    <div>
+            <div class="col-md-3">
+                <!-- <div class="card">
+                    <div class="card-header">
+                        <h3>Meeting Readiness Checker</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="checker-list">
+
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-md-3">
+                <div class="card rounded-lg" id="video-tiles-16" style="display: none;">
+                    <div class="card-body scroll">
                         <div class="row">
-                            <div> <video controls muted id="video-tile-1" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-2" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-3" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-4" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-5" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-6" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-7" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-8" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-9" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-10" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-11" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-12" height="150" width="150"> </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-1" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-2" height="150" width="200">
+                                </video> </div>
                         </div>
                         <div class="row">
-
-                            <div> <video controls muted id="video-tile-13" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-14" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-15" height="150" width="150"> </video> </div>
-                            <div> <video controls muted id="video-tile-16" height="150" width="150"> </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-3" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-4" height="150" width="200">
+                                </video> </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-5" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-6" height="150" width="200">
+                                </video> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-7" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-8" height="150" width="200">
+                                </video> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-9" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-10" height="150" width="200">
+                                </video> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-11" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-12" height="150" width="200">
+                                </video> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-13" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-14" height="150" width="200">
+                                </video> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"> <video controls muted id="video-tile-15" height="150" width="200">
+                                </video> </div>
+                            <div class="col-6"> <video controls muted id="video-tile-16" height="150" width="200">
+                                </video> </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div style="height: 20px;"></div>
-    </div>
 
-    <div class="row ml-1">
-        <div class="col-md-3">
-            <audio id="micro-phone-audio"> </audio>
-            <div class="card" id="audio-input-devices-block" style="display: none;">
-                <div class="card-body"> </video>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="text-left">
-                                <i class="fas fa-microphone-slash mr-1 fa-2x" id="microphone-icon"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div id="audio-input-devices"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" id="audio-output-devices-block" style="display: none;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="text-left">
-                                <i class="fas fa-volume-up mr-1 fa-2x" id="speaker-icon"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div id="audio-output-devices"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row ml-1 mt-2">
-        <div class="col-md-3">
-            <div class="card" id="video-input-devices-block" style="display: none;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="text-left">
-                                <i class="fas fa-video-slash mr-1 fa-2x" id="video-icon"></i>
-                            </div>
-                        </div>
-                        <div class="cold-md-10">
-                            <div id="video-input-devices"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mr-2" id="events-block" style="display: none;">
-            <div>
-                <div class="card">
-                    <div class="alert alert-danger ml-2 mt-2 mr-2 mb-2" role="alert" id="events"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+        
 
-
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="/static/js/aws-sdk-2.763.0.min.js"></script>
-    <script src="/static/js/aws-cognito-sdk.min.js"></script>
-    <script src="/static/js/amazon-cognito-identity.min.js"></script>
-    <script src="/static/js/amazon-chime-sdk.min.js"></script>
-    <script src="/static/js/jwt-decode.js"></script>
-    <script src="/static/js/app.js"></script>
-    <script src="/static/js/chime-app.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="../static/js/aws-sdk-2.763.0.min.js"></script>
+        <script src="../static/js/aws-cognito-sdk.min.js"></script>
+        <script src="../static/js/amazon-cognito-identity.min.js"></script>
+        <script src="../static/js/amazon-chime-sdk.min.js"></script>
+        <script src="../static/js/app.js"></script>
+        <script src="../static/js/chime-app.js"></script>
 </body>
 
 </html>
