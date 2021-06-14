@@ -1,28 +1,4 @@
-# Deploying Lambda Functions from command line
-## Package the function including dependencies
-```sh
-# Create a virtual environment
-python3 -m venv my-env
-
-# Activate it
-source my-env/bin/activate
-
-# Install the dependencies
-pip install Pillow
-
-# Deactivate the environment
-deactivate
-
-# This is where all packages are installed.
-cd my-env/lib/python3.8/site-packages
-
-# Zip the current directory and create a file function.zip
-zip -r9 ${LAMBDA_FUNCTION_LOCATION}/function.zip .
-cd ${LAMBDA_FUNCTION_LOCATION}
-
-# Include the Lambda function in the zip file
-zip -g function.zip lambda_function.py 
-```
+# Using Chime SDK
 
 ## Create `create_meeting` Lambda function
 ```sh
@@ -35,7 +11,7 @@ aws lambda create-function --function-name create_meeting \
 --runtime python3.8 \
 --timeout 10 \
 --memory-size 1024 \
---role arn:aws:iam::567463201961:role/service-role/create_function-role-p9tqvqrp
+--role arn:aws:iam::00000000000:role/service-role/create_function-role-p9tqvqrp
 ```
 
 ## Create add_attendee Lambda function
@@ -48,7 +24,7 @@ aws lambda create-function --function-name add_attendee \
 --runtime python3.8 \
 --timeout 10 \
 --memory-size 1024 \
---role arn:aws:iam::567463201961:role/service-role/create_function-role-p9tqvqrp
+--role arn:aws:iam::00000000000:role/service-role/create_function-role-p9tqvqrp
 ```
 
 ## Invoke a Gateway API using `POST`
@@ -94,7 +70,7 @@ What this means is that:
 ## Help
 - [How to resolve CORS error](https://stackoverflow.com/questions/35190615/api-gateway-cors-no-access-control-allow-origin-header)
 ****
-## My Learnings today
+## Errors
 - If I use *Lambda Proxy* (It means HTTP Request is passed to the Lambda using `event`), Use the following code to access the payload sent from UI.
 
 ```python

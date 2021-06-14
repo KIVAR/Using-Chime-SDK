@@ -27,7 +27,7 @@ function saveConfigData(e) {
 
     region = 'us-east-2';
     userPoolId = 'us-east-2_NuAreech2';
-    identityPoolId = 'us-east-2:a2f1e5e9-6ee4-43e5-88dd-b8848a06039e';
+    // identityPoolId = '';
     appId = 'i6spf3rp58te0usidonvcbbof';
 
     poolData = {
@@ -155,18 +155,18 @@ function authenticateUser(e) {
                             idToken = result.getIdToken().getJwtToken();
 
                             // Add the User's Id Token to the Cognito credentials login map.
-                            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                                IdentityPoolId: identityPoolId,
-                                Logins: logins,
-                            });
+                            // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                            //     IdentityPoolId: identityPoolId,
+                            //     Logins: logins,
+                            // });
 
                             // Make the call to obtain credentials
-                            AWS.config.credentials.get(function () {
-                                // Credentials will be available when this function is called.
-                                var accessKeyId = AWS.config.credentials.accessKeyId;
-                                var secretAccessKey = AWS.config.credentials.secretAccessKey;
-                                var sessionToken = AWS.config.credentials.sessionToken;
-                            });
+                            // AWS.config.credentials.get(function () {
+                            //     // Credentials will be available when this function is called.
+                            //     var accessKeyId = AWS.config.credentials.accessKeyId;
+                            //     var secretAccessKey = AWS.config.credentials.secretAccessKey;
+                            //     var sessionToken = AWS.config.credentials.sessionToken;
+                            // });
 
                             // Clear the screen
                             document.getElementById('screen-1').remove();
