@@ -1,6 +1,14 @@
 # Using Chime SDK
+## Design
+## Authentication using Cognito
+## API Gateway
+## DynamoDB
+## Permissions
+### Lambda Role
+### Lambda Resource Policy
 
-## Create `create_meeting` Lambda function
+## Testing
+### Deploy `create_meeting` Lambda function
 ```sh
 # Packing a function that does not have any dependencies.
 zip func.zip create_meeting.py
@@ -14,7 +22,7 @@ aws lambda create-function --function-name create_meeting \
 --role arn:aws:iam::00000000000:role/service-role/create_function-role-p9tqvqrp
 ```
 
-## Create add_attendee Lambda function
+### Create add_attendee Lambda function
 ```sh
 zip add_attendee.zip add_attendee.py
 
@@ -27,7 +35,7 @@ aws lambda create-function --function-name add_attendee \
 --role arn:aws:iam::00000000000:role/service-role/create_function-role-p9tqvqrp
 ```
 
-## Invoke a Gateway API using `POST`
+### Invoke a Gateway API using `POST`
 Here, we are passing data for the `POST` method using `-d` option.
 
 ```sh
